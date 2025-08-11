@@ -188,231 +188,120 @@ hr{border:0; border-top:1px dashed rgba(255,255,255,.2); margin:10px 0}
 </div>
 
 <script>
-/* ========= Question Bank: EV Wall Charger 1 เฟส ≤ 7.4 kW =========
-   โฟกัสมาตรฐาน: MEA MPESTD‑001:2563, ข้อกำหนด MEA EV Load, IEC 61851/62196/62423/62955
-   เดินสาย IEC 01 (THW) แบบร้อยท่อเกาะผนัง เลือกกระแสสาย ≥ 1.25× กระแสเข้า EVSE
-*/
+/* ========= Question Bank: EV Wall Charger 1 เฟส ≤ 7.4 kW ========= */
 const BANK = {
   Easy: [
     { q:"โหมดการชาร์จของ Wall Charger สำหรับรถยนต์ไฟฟ้า AC ที่ติดตั้งถาวรและสื่อสารกับรถคือโหมดใด?",
       choices:["โหมด 3","โหมด 1","โหมด 2","โหมด 4"], correct:0,
-      reasons:[
-        "ถูก: โหมด 3 (IEC 61851) เป็น AC EVSE ติดตั้งถาวร มี control pilot",
-        "ผิด: โหมด 1 คือเต้ารับธรรมดา ไม่มีการสื่อสาร/ไม่เหมาะ",
-        "ผิด: โหมด 2 คือ portable EVSE (IC-CPD)",
-        "ผิด: โหมด 4 คือ DC fast charge"
-      ],
-      hints:["ดูนิยาม IEC 61851","ติดตั้งถาวร + control pilot"],
-      why:"แยกโหมดถูกต้องเพื่อเลือกอุปกรณ์รองรับ",
-      takeaway:"Wall Charger บ้าน/ออฟฟิศ = โหมด 3",
-      thinkQ:"ถ้าจะรองรับ DC ต้องปรับอะไร?",
-      thinkA:"ต้องไปโหมด 4 กับชุดจ่าย DC และมาตรการแตกต่าง" },
-
+      reasons:["ถูก: โหมด 3 (IEC 61851) เป็น AC EVSE ติดตั้งถาวร มี control pilot","ผิด: โหมด 1 คือเต้ารับธรรมดา ไม่มีการสื่อสาร/ไม่เหมาะ","ผิด: โหมด 2 คือ portable EVSE (IC-CPD)","ผิด: โหมด 4 คือ DC fast charge"],
+      hints:["ดูนิยาม IEC 61851","ติดตั้งถาวร + control pilot"], why:"แยกโหมดถูกต้องเพื่อเลือกอุปกรณ์รองรับ", takeaway:"Wall Charger บ้าน/ออฟฟิศ = โหมด 3", thinkQ:"ถ้าจะรองรับ DC ต้องปรับอะไร?", thinkA:"ต้องไปโหมด 4 กับชุดจ่าย DC และมาตรการแตกต่าง" },
     { q:"อุปกรณ์ป้องกันรั่วลงดินที่เหมาะกับ EVSE โหมด 3 ตามหลักมาตรฐานคือ?",
       choices:["RCD Type B ≤ 30 mA หรือ A/F + RDC‑DD ≥6 mA","ใช้ MCB อย่างเดียว","ใช้ RCBO Type AC ที่เมนรวม","ไม่ต้องมี RCD"], correct:0,
-      reasons:[
-        "ถูก: ต้องตรวจจับกระแส DC รั่วได้ (Type B) หรือใช้ A/F + อุปกรณ์ตรวจจับ DC (RDC‑DD)",
-        "ผิด: ป้องกันกระแสเกินแต่ไม่กันกระแสรั่ว",
-        "ผิด: Type AC ไม่ครอบคลุม DC component",
-        "ผิด: EVSE จำเป็นต้องมีการคุ้มครองบุคคล"
-      ],
-      hints:["Type B หรือ A/F + RDC‑DD","30 mA"],
-      why:"ลดความเสี่ยงไฟฟ้าดูด/ไฟไหม้",
-      takeaway:"ห้ามใช้ Type AC เดี่ยว ๆ",
-      thinkQ:"วาง RCD ที่ใดเพื่อหลีกเลี่ยง nuisance trip?",
-      thinkA:"แยกวงจรย่อยเฉพาะ EVSE ไม่ผ่าน RCD ซ้อนซ้อน" },
-
+      reasons:["ถูก: ต้องตรวจจับกระแส DC รั่วได้ (Type B) หรือใช้ A/F + RDC‑DD","ผิด: ป้องกันกระแสเกินแต่ไม่กันกระแสรั่ว","ผิด: Type AC ไม่ครอบคลุม DC component","ผิด: EVSE จำเป็นต้องมีการคุ้มครองบุคคล"],
+      hints:["Type B หรือ A/F + RDC‑DD","30 mA"], why:"ลดความเสี่ยงไฟฟ้าดูด/ไฟไหม้", takeaway:"ห้ามใช้ Type AC เดี่ยว ๆ", thinkQ:"วาง RCD ที่ใดเพื่อหลีกเลี่ยง nuisance trip?", thinkA:"แยกวงจรย่อยเฉพาะ EVSE ไม่ผ่าน RCD ซ้อนซ้อน" },
     { q:"คำนวณกระแสจริง I ของ Wall Charger 7.4 kW, 230 V, PF=1.0 = ?",
       choices:["≈ 32.2 A","≈ 25 A","≈ 16 A","≈ 40 A"], correct:0,
-      reasons:[
-        "ถูก: I = P/(V×PF) = 7400/(230×1) ≈ 32.17 A",
-        "ผิด: คำนวณต่ำเกินจริง",
-        "ผิด: ครึ่งหนึ่งของจริง",
-        "ผิด: สูงเกินจากสูตร"
-      ],
-      hints:["I = P/(V×PF)","PF=1.0 สำหรับ AC EVSE"],
-      why:"กระแสคือฐานการเลือกสาย/เบรกเกอร์",
-      takeaway:"ใส่ PF ในสูตรเสมอ",
-      thinkQ:"ถ้า PF=0.95 จะเกิดอะไรกับ I?",
-      thinkA:"I สูงขึ้นเล็กน้อย ต้องพิจารณา selectivity ใหม่" },
-
+      reasons:["ถูก: I = P/(V×PF) = 7400/(230×1) ≈ 32.17 A","ผิด: คำนวณต่ำเกินจริง","ผิด: ครึ่งหนึ่งของจริง","ผิด: สูงเกินจากสูตร"],
+      hints:["I = P/(V×PF)","PF=1.0 สำหรับ AC EVSE"], why:"กระแสคือฐานการเลือกสาย/เบรกเกอร์", takeaway:"ใส่ PF ในสูตรเสมอ", thinkQ:"ถ้า PF=0.95 จะเกิดอะไรกับ I?", thinkA:"I สูงขึ้นเล็กน้อย ต้องพิจารณา selectivity ใหม่" },
     { q:"ความยาวสายจ่ายจากตู้ย่อยถึง EVSE ควรพิจารณาอะไรเป็นพิเศษข้อใด?",
       choices:["แรงดันตก (Voltage drop)","สีของท่อ","สติ๊กเกอร์แบรนด์","จำนวนสกรู"], correct:0,
-      reasons:[
-        "ถูก: สายยาวต้องคุมแรงดันตกตามเกณฑ์",
-        "ผิด: ไม่ใช่ปัจจัยออกแบบหลัก",
-        "ผิด: ไม่เกี่ยวกับความสามารถไฟฟ้า",
-        "ผิด: รายละเอียดเชิงกล ไม่ใช่เกณฑ์ไฟฟ้า"
-      ],
-      hints:["%Vdrop","พิจารณาพร้อมหน้าตัดสาย"],
-      why:"คงคุณภาพแรงดันให้ EVSE ทำงานปกติ",
-      takeaway:"ยาวขึ้น → หน้าตัดต้องเพียงพอ",
-      thinkQ:"ถ้าสายยาว 40 m จะเลือกหน้าตัดเพิ่มอย่างไร?",
-      thinkA:"คำนวณ Vdrop และขยับหน้าตัด/ลดความยาว/ย้ายตู้" },
-
+      reasons:["ถูก: สายยาวต้องคุมแรงดันตกตามเกณฑ์","ผิด: ไม่ใช่ปัจจัยออกแบบหลัก","ผิด: ไม่เกี่ยวกับความสามารถไฟฟ้า","ผิด: รายละเอียดเชิงกล ไม่ใช่เกณฑ์ไฟฟ้า"],
+      hints:["%Vdrop","พิจารณาพร้อมหน้าตัดสาย"], why:"คงคุณภาพแรงดันให้ EVSE ทำงานปกติ", takeaway:"ยาวขึ้น → หน้าตัดต้องเพียงพอ", thinkQ:"ถ้าสายยาว 40 m จะเลือกหน้าตัดเพิ่มอย่างไร?", thinkA:"คำนวณ Vdrop และขยับหน้าตัด/ลดความยาว/ย้ายตู้" },
     { q:"ตำแหน่งติดตั้งหัวจ่าย/เต้ารับของ EVSE ควรอยู่สูงจากพื้นประมาณใด?",
       choices:["~0.75–1.2 m","≤0.3 m","2–2.5 m","ไม่กำหนด"], correct:0,
-      reasons:[
-        "ถูก: ช่วงนี้ใช้งานสะดวกและปลอดภัย",
-        "ผิด: ต่ำเสี่ยงน้ำ/กระแทก",
-        "ผิด: สูงเกินใช้งานยาก",
-        "ผิด: มีข้อแนะนำในมาตรฐาน"
-      ],
-      hints:["เริ่มที่ 0.75","ช่วงความสูง"],
-      why:"ลดความเสี่ยงน้ำ/สายตึง",
-      takeaway:"ติดตั้งระดับเอื้อมถึงง่าย",
-      thinkQ:"พื้นที่เสี่ยงน้ำท่วมต้องเพิ่มมาตรการใด?",
-      thinkA:"ยกสูง/ซีล/ระดับการป้องกันน้ำ IP ที่เหมาะสม" }
+      reasons:["ถูก: ช่วงนี้ใช้งานสะดวกและปลอดภัย","ผิด: ต่ำเสี่ยงน้ำ/กระแทก","ผิด: สูงเกินใช้งานยาก","ผิด: มีข้อแนะนำในมาตรฐาน"],
+      hints:["เริ่มที่ 0.75","ช่วงความสูง"], why:"ลดความเสี่ยงน้ำ/สายตึง", takeaway:"ติดตั้งระดับเอื้อมถึงง่าย", thinkQ:"พื้นที่เสี่ยงน้ำท่วมต้องเพิ่มมาตรการใด?", thinkA:"ยกสูง/ซีล/ระดับการป้องกันน้ำ IP ที่เหมาะสม" }
   ],
 
   Medium: [
-    { q:"การเลือกขนาดสาย IEC 01 (THW) เดินร้อยท่อเกาะผนัง กระแสออกแบบหลังคูณ 1.25 = 28 A ควรใช้หน้าตัดขั้นต่ำ?",
-      choices:["4 ตร.มม.","2.5 ตร.มม.","6 ตร.มม.","1.5 ตร.มม."], correct:0,
+    { q:"ถ้าผู้ติดตั้งเลือกใช้สาย 6 mm² (รองรับ ~36 A) กับ Wall Charger 7.2 kW (I_design = 39.13 A) และเลือกเบรกเกอร์ 40 A ผลที่คาดว่าจะเกิดขึ้นคืออะไร?",
+      choices:["สายทำงานเกินพิกัดต่อเนื่อง เสี่ยงร้อนสะสม/ฉนวนเสื่อม และอาจทริปจากส่วนความร้อนของเบรกเกอร์ภายหลัง","ปลอดภัย เพราะเบรกเกอร์ 40 A คุมได้อยู่แล้ว","ปลอดภัย เพราะ PF=1.0 ทำให้ไม่เกิดความร้อน","เปลี่ยนเป็นเบรกเกอร์ 32 A ก็จบ"], correct:0,
       reasons:[
-        "ถูก: ตารางกลุ่มติดตั้งนี้ 4 ตร.มม. รับได้ราว 28 A (ต้องเช็ค derating)",
-        "ผิด: รับได้ ~21 A ต่ำกว่าออกแบบ",
-        "ผิด: ใช้ได้แต่เกินจำเป็นถ้าไม่มีเหตุผล",
-        "ผิด: ต่ำกว่าเกณฑ์มาก"
+        "ถูก: 6 mm² ~36 A < I_design 39.13 A → สายต่ำกว่าพิกัด เบรกเกอร์ 40 A อนุญาตกระแสเกินพิกัดสายได้ เกิดความร้อนสะสม/อายุฉนวนสั้นลง และอาจทริปช้าแบบ thermal.",
+        "ผิด: ไม่ปลอดภัย เพราะการเลือกสายต้อง ≥ I_design และสัมพันธ์กับเบรกเกอร์.",
+        "ผิด: PF=1 ไม่ได้ทำให้ I ลดลงกว่าที่คำนวณ ความร้อนยังขึ้นตาม I²R.",
+        "ผิด: 32 A < I_load ชัดเจนและไม่แก้เรื่องสายต่ำกว่าพิกัด"
       ],
-      hints:["ดูตาราง IEC 01 (THW)","ค่า 4 ตร.มม."],
-      why:"ให้พิกัดสายไม่ต่ำกว่ากระแสออกแบบ",
-      takeaway:"เริ่มจาก I_design ×1.25 แล้วเทียบตาราง",
-      thinkQ:"ถ้ามี 3 วงจรเดินคู่กัน ใกล้กัน จะใช้ตัวคูณเท่าไร?",
-      thinkA:"ประมาณ 0.79 สำหรับ 3 วงจร (ตรวจตาราง derating)" },
+      hints:["หลัก: พิกัดสายต้อง ≥ I_design","อย่าปรับที่เบรกเกอร์เพื่อชดเชยสายเล็ก"],
+      why:"ต้องให้สาย–เบรกเกอร์–โหลด match กัน โดยพิจารณา I_design ที่รวมตัวคูณ 1.25 แล้ว",
+      takeaway:"ถ้า I_design ≈ 39 A → อย่างน้อยต้องขยับหน้าตัด ≥ 10 mm² หรือทบทวนเส้นทาง/ระยะทาง",
+      thinkQ:"ถ้าต้องใช้ 6 mm² จริง ๆ จะมีวิธีทำให้ผ่านเกณฑ์หรือไม่?",
+      thinkA:"ลด I_design (ลดกำลัง/ปรับโหลด), สั้นระยะ, เดินแยก ลด derating พร้อมเอกสารยืนยันตามมาตรฐาน" },
 
     { q:"ระบบสายดินที่แนะนำเมื่อรับไฟแรงต่ำจากการไฟฟ้าเข้าจุดติดตั้ง EVSE คือ?",
       choices:["TT (หลักดินแยกอิสระ)","TN‑S","TN‑C","IT"], correct:0,
-      reasons:[
-        "ถูก: TT ใช้หลักดินอิสระ แยกจากนิวทรัล ลดความเสี่ยง",
-        "ผิด: ใช้ได้ในบางบริบทแต่ไม่ใช่คำแนะนำหลัก",
-        "ผิด: TN‑C ไม่เหมาะกับ EVSE",
-        "ผิด: ไม่ใช่ระบบที่ใช้ทั่วไปในงานนี้"
-      ],
-      hints:["ชื่อขึ้นต้น T สองตัว","หลักดินอิสระ"],
-      why:"ควบคุมแรงดันสัมผัสและ fault path เหมาะสม",
-      takeaway:"ตรวจระยะห่างหลักดิน ≥ 2 m",
-      thinkQ:"ถ้าเป็น TN‑C‑S ต้องเติมมาตรการใด?",
-      thinkA:"อุปกรณ์ปลดวงจรเมื่อ Touch Voltage > 70 V ใน 5 s และ RCD" },
+      reasons:["ถูก: TT ใช้หลักดินอิสระ แยกจากนิวทรัล ลดความเสี่ยง","ผิด: ใช้ได้ในบางบริบทแต่ไม่ใช่คำแนะนำหลัก","ผิด: TN‑C ไม่เหมาะกับ EVSE","ผิด: ไม่ใช่ระบบที่ใช้ทั่วไปในงานนี้"],
+      hints:["ชื่อขึ้นต้น T สองตัว","หลักดินอิสระ"], why:"ควบคุมแรงดันสัมผัสและ fault path เหมาะสม", takeaway:"ตรวจระยะห่างหลักดิน ≥ 2 m", thinkQ:"ถ้าเป็น TN‑C‑S ต้องเติมมาตรการใด?", thinkA:"อุปกรณ์ปลดวงจรเมื่อ Touch Voltage > 70 V ใน 5 s และ RCD" },
 
-    { q:"เลือกเบรกเกอร์สำหรับ 7.4 kW (≈32 A) อย่างเหมาะสม ควรเลือกช่วงใด?",
-      choices:["MCB 32–40 A จับคู่ RCD และสายให้สัมพันธ์","MCB 16 A","MCB 25 A","MCB 63 A"], correct:0,
+    { q:"Wall Charger 1 เฟส 7.2 kW (PF=1) ที่ 230 V เดินสายร้อยท่อเกาะผนัง ระยะทาง 38 m และต้องเผื่อกระแส 1.25 เท่า หากกำหนดแรงดันตกไม่เกิน 3% ควรเลือกขนาดสาย IEC01 (THW) อย่างน้อยเท่าใด?",
+      choices:["10 ตร.มม.","6 ตร.มม.","4 ตร.มม.","16 ตร.มม."], correct:0,
       reasons:[
-        "ถูก: ให้ผ่าน I_load และสัมพันธ์สาย/อุปกรณ์ป้องกัน",
-        "ผิด: ต่ำเกินไปจะทริป",
-        "ผิด: ต่ำกว่ากระแสจริง",
-        "ผิด: เกินความจำเป็นและ selectivity เสีย"
+        "ถูก: I_load = 7200/230 ≈ 31.3 A, I_design = 31.3×1.25 ≈ 39.13 A. สำหรับ L=38 m (ไป-กลับ 76 m) 6 ตร.มม. ให้ ΔV ≈ 4% (>3%), ขยับเป็น 10 ตร.มม. ได้ ΔV ≈ 2.4% ผ่านเกณฑ์.",
+        "ผิด: แม้พิกัดกระแสใกล้เคียง แต่ Vdrop เกิน 3%",
+        "ผิด: พิกัดและ Vdrop ไม่ผ่าน",
+        "ผิด: ผ่านแน่แต่เกินจำเป็น"
       ],
-      hints:["ดู I≈32 A","เลือกช่วงใกล้ แต่ไม่ต่ำกว่า"],
-      why:"คุ้มครองสาย/อุปกรณ์ ไม่ทริปเกินจำเป็น",
-      takeaway:"สาย–เบรกเกอร์–RCD ต้อง match",
-      thinkQ:"Curve C หรือ B เหมาะกว่า?",
-      thinkA:"ส่วนใหญ่ Curve C สำหรับโหลดมี inrush เล็กน้อย" },
+      hints:["คำนวณ I ก่อน แล้วคิด Vdrop","ใช้ R ต่อกม. ของทองแดงใส่สูตร ΔV"],
+      why:"ต้องผ่านทั้งพิกัดกระแสและแรงดันตกพร้อมกัน",
+      takeaway:"สายขั้นต่ำที่ผ่านทั้งสองเกณฑ์ = 10 ตร.มม. (กรณีนี้)",
+      thinkQ:"ถ้าจัดวางให้ระยะสั้นลงเหลือ 20 m จะลดหน้าตัดได้หรือไม่?",
+      thinkA:"อาจลดได้หากยังผ่านทั้งพิกัดและ Vdrop" },
 
-    { q:"สายชาร์จออกจากตัวเครื่อง (cable attached) ควรมีความยาวไม่เกินประมาณเท่าไรตามข้อแนะนำ?",
-      choices:["~7.5 m","~3 m","~10 m","ไม่จำกัด"], correct:0,
+    { q:"จากตารางสาย 60227 IEC01 (THW) เดินร้อยท่อเกาะผนัง กลุ่มที่ 2 ถ้าต้องรองรับกระแส 39.13 A ควรเลือกขนาดสายอย่างน้อยเท่าใด?",
+      choices:["10 ตร.มม.","6 ตร.มม.","4 ตร.มม.","16 ตร.มม."], correct:0,
       reasons:[
-        "ถูก: ~7.5 m ใช้งานสะดวก ลดพันกัน",
-        "ผิด: มักสั้นเกินสำหรับหลายตำแหน่งจอด",
-        "ผิด: ยาวเกินเสี่ยงดึง/พัน",
-        "ผิด: มีคำแนะนำจำกัดความยาว"
+        "ถูก: 10 ตร.มม. พิกัดประมาณ ≥ 39 A จึงครอบคลุม I_design 39.13 A (ต้องตรวจเงื่อนไข derating/อุณหภูมิอีกครั้ง)",
+        "ผิด: ~36 A ต่ำกว่า I_design → ไม่ผ่าน",
+        "ผิด: ~28 A ต่ำกว่าเกณฑ์มาก",
+        "ผิด: ผ่านแต่เกินจำเป็นหากไม่มีเหตุผลพิเศษ"
       ],
-      hints:["เลขลงท้าย .5","ความปลอดภัย/การจัดการสาย"],
-      why:"ลดอุบัติเหตุ/แรงดึงที่คอนเนคเตอร์",
-      takeaway:"ยึดตามคู่มือและมาตรฐาน",
-      thinkQ:"ถ้าจอดไกล ควรย้ายตำแหน่ง EVSE หรือเพิ่มความยาวสาย?",
-      thinkA:"ย้ายตำแหน่งติดตั้ง EVSE ดีกว่าเพิ่มความยาว" },
+      hints:["กลุ่มติดตั้ง: ร้อยท่อเกาะผนัง","เทียบ 6 vs 10 ตร.มม."],
+      why:"การเลือกหน้าตัดต้องไม่น้อยกว่า I_design และตรวจปัจจัยลดทอน",
+      takeaway:"เริ่มจาก I=P/(V×PF) → ×1.25 → เทียบตารางพิกัด",
+      thinkQ:"ถ้าเดินรวมหลายวงจรใกล้กัน จะต้องขยับหน้าตัดอย่างไร?",
+      thinkA:"ใช้ตัวคูณ derating ของรูปแบบติดตั้งแล้วเลือกหน้าตัดสูงขึ้น" },
 
-    { q:"การวางวงจร EVSE ควรแยกจากวงจรอื่นเพราะเหตุผลใด?",
-      choices:["ลดผลกระทบจาก RCD/MCB และบริหารโหลด","เพื่อความสวยงาม","ใช้เบรกเกอร์เหลือ","ไม่เกี่ยว"], correct:0,
+    { q:"ผู้ใช้ร้องเรียนว่า Wall Charger 7.2 kW ชาร์จแล้วเบรกเกอร์ 40 A ทริปหลังใช้งานต่อเนื่อง ~40 นาที ทั้งที่กระแสใช้งานเฉลี่ย ≈31.3 A และใช้สาย 10 ตร.มม. ร้อยท่อเกาะผนัง ควรตรวจสิ่งใดเป็นอันดับแรก?",
+      choices:["ตรวจจุดต่อหลวม/ออกซิไดซ์ที่ MCB/ตู้/จุดต่อ (I²R ทำให้ร้อนสะสมจนทริป thermal)","ลดขนาดสายลงให้ใกล้พิกัด","เปลี่ยนเป็นเบรกเกอร์ Curve B ขนาดต่ำลง","ปิด RCD เพราะอาจทริปซ้อน"], correct:0,
       reasons:[
-        "ถูก: ลด nuisance trip/ปรับบำรุงรักษาง่าย",
-        "ผิด: ไม่ใช่เหตุผลด้านความปลอดภัย",
-        "ผิด: เหตุผลไม่เป็นระบบ",
-        "ผิด: มาตรฐานแนะนำให้แยก"
+        "ถูก: จุดต่อหลวมทำให้ความต้านทานเพิ่ม เกิดความร้อนสะสม เบรกเกอร์ส่วน thermal ทริปช้าเมื่ออุณหภูมิสูง",
+        "ผิด: สายเล็กลงยิ่งร้อนและผิดหลัก",
+        "ผิด: ลดขนาด/เปลี่ยน curve ไม่แก้สาเหตุร้อนที่จุดต่อ",
+        "ผิด: RCD ไม่ใช่สาเหตุหลักของทริปความร้อน และห้ามถอด"
       ],
-      hints:["selectivity","maintenance"],
-      why:"เพิ่มความเชื่อถือในการจ่ายไฟ",
-      takeaway:"วงจรเฉพาะ EVSE",
-      thinkQ:"ถ้าจำเป็นต้องแชร์ตู้เดียวกัน จะจัดการอย่างไร?",
-      thinkA:"จัดสายดิน/บัส/อุปกรณ์ให้เป็นสัดส่วนและ labeling ชัดเจน" }
+      hints:["ดูรอยไหม้/คราบร้อน/ขันแรงบิดตามสเปค","วัดอุณหภูมิเทอร์มอลสแกน"],
+      why:"อาการทริปช้าตามเวลา ส่อความร้อนสะสมมากกว่า overcurrent ทันที",
+      takeaway:"เริ่มที่คอนเนคชันทุกจุดก่อน แล้วค่อยไล่โหลด/เส้นทาง",
+      thinkQ:"ถ้าแก้จุดต่อแล้ว ยังทริป จะตรวจอะไรต่อ?",
+      thinkA:"ตรวจ inrush/profile โหลดจริง, curve/selectivity, อุณหภูมิสิ่งแวดล้อมในตู้" }
   ],
 
   Hard: [
     { q:"โจทย์คำนวณ: บ้านเดี่ยว 230 V ตู้ย่อยอยู่ห่าง EVSE 25 m ต้องการติดตั้ง Wall Charger 7.4 kW PF=1.0 เลือกสาย IEC 01 (THW) ร้อยท่อเกาะผนังให้ผ่าน I_design ×1.25 และคุมแรงดันตก คุณเริ่มคำนวณจากอะไร?",
       choices:["คำนวณ I=P/(V×PF) → ×1.25 → เทียบตารางพิกัดสาย → เช็ค Vdrop","เลือก 2.5 ตร.มม. ไปก่อน","เลือก MCB ก่อนแล้วค่อยย้อนหา I","ดูสีท่อก่อน"], correct:0,
-      reasons:[
-        "ถูก: ลำดับที่ถูกต้องเพื่อให้สาย/MCB/RCD สัมพันธ์และผ่าน Vdrop",
-        "ผิด: เดาสุ่มอาจต่ำกว่าพิกัด",
-        "ผิด: ต้องรู้ I ก่อนเลือก MCB",
-        "ผิด: ไม่ใช่เกณฑ์ทางวิศวกรรม"
-      ],
-      hints:["สูตร I ก่อน","1.25×"],
-      why:"ลำดับคิดถูก ลดผิดพลาด",
-      takeaway:"เริ่มจากกระแสจริงเสมอ",
-      thinkQ:"ถ้า Vdrop เกินเกณฑ์ 3% จะแก้อย่างไร?",
-      thinkA:"เพิ่มหน้าตัด/ลดความยาว/ย้ายตู้/เพิ่มตู้ย่อย" },
-
+      reasons:["ถูก: ลำดับที่ถูกต้องเพื่อให้สาย/MCB/RCD สัมพันธ์และผ่าน Vdrop","ผิด: เดาสุ่มอาจต่ำกว่าพิกัด","ผิด: ต้องรู้ I ก่อนเลือก MCB","ผิด: ไม่ใช่เกณฑ์ทางวิศวกรรม"],
+      hints:["สูตร I ก่อน","1.25×"], why:"ลำดับคิดถูก ลดผิดพลาด", takeaway:"เริ่มจากกระแสจริงเสมอ", thinkQ:"ถ้า Vdrop เกินเกณฑ์ 3% จะแก้อย่างไร?", thinkA:"เพิ่มหน้าตัด/ลดความยาว/ย้ายตู้/เพิ่มตู้ย่อย" },
     { q:"เดินสายหลายวงจรเกาะผนังใกล้กัน 3 วงจร ต้องใช้ตัวคูณลดทอนประมาณเท่าไร?",
       choices:["~0.79","1.00","0.50","~0.92"], correct:0,
-      reasons:[
-        "ถูก: จากตาราง derating สำหรับ 3 วงจร",
-        "ผิด: ไม่มีการลดทอนเป็นไปไม่ได้",
-        "ผิด: ต่ำเกินจริง",
-        "ผิด: ค่านี้ไม่ใช่สำหรับ 3 วงจร"
-      ],
-      hints:["ต่ำกว่า 0.8 เล็กน้อย","ดูตาราง derating"],
-      why:"ความร้อนสะสมทำให้พิกัดลด",
-      takeaway:"เผื่อ derating เสมอ",
-      thinkQ:"ถ้าเปลี่ยนเป็นแยกระยะห่างมากขึ้น ได้อะไร?",
-      thinkA:"ลด derating อาจใช้หน้าตัดเดิมได้" },
-
+      reasons:["ถูก: จากตาราง derating สำหรับ 3 วงจร","ผิด: ไม่มีการลดทอนเป็นไปไม่ได้","ผิด: ต่ำเกินจริง","ผิด: ค่านี้ไม่ใช่สำหรับ 3 วงจร"],
+      hints:["ต่ำกว่า 0.8 เล็กน้อย","ดูตาราง derating"], why:"ความร้อนสะสมทำให้พิกัดลด", takeaway:"เผื่อ derating เสมอ", thinkQ:"ถ้าเปลี่ยนเป็นแยกระยะห่างมากขึ้น ได้อะไร?", thinkA:"ลด derating อาจใช้หน้าตัดเดิมได้" },
     { q:"สำหรับ TN‑C‑S ที่ไซต์บังคับใช้ ข้อใดเป็นมาตรการเสริมที่ถูกต้อง?",
       choices:["วงจรปลดเมื่อ Touch Voltage > 70 V ภายใน 5 s และรวม N/PE","ยกเลิก RCD","เพิ่มโหลดเฟสเดียวให้สมดุล","ไม่ต้องตรวจความต้านทานดิน"], correct:0,
-      reasons:[
-        "ถูก: เป็นมาตรการที่มาตรฐานยอมรับเพื่อลดความเสี่ยง",
-        "ผิด: RCD ยังจำเป็น",
-        "ผิด: เพิ่มโหลดไม่ใช่มาตรการความปลอดภัย",
-        "ผิด: ต้องตรวจค่าดินตามเกณฑ์"
-      ],
-      hints:["70 V • 5 s","ตัดทุกเส้นรวม N"],
-      why:"ลดอันตรายกรณี PEN ขาด/ไม่สมบูรณ์",
-      takeaway:"TN‑C‑S ต้องมีแผนป้องกันเฉพาะ",
-      thinkQ:"จะตรวจ PEN ให้มั่นใจได้อย่างไร?",
-      thinkA:"ทดสอบความต่อเนื่อง/ตรวจจุดต่อ/วิเคราะห์โวลท์ตก" },
-
+      reasons:["ถูก: เป็นมาตรการที่มาตรฐานยอมรับเพื่อลดความเสี่ยง","ผิด: RCD ยังจำเป็น","ผิด: เพิ่มโหลดไม่ใช่มาตรการความปลอดภัย","ผิด: ต้องตรวจค่าดินตามเกณฑ์"],
+      hints:["70 V • 5 s","ตัดทุกเส้นรวม N"], why:"ลดอันตรายกรณี PEN ขาด/ไม่สมบูรณ์", takeaway:"TN‑C‑S ต้องมีแผนป้องกันเฉพาะ", thinkQ:"จะตรวจ PEN ให้มั่นใจได้อย่างไร?", thinkA:"ทดสอบความต่อเนื่อง/ตรวจจุดต่อ/วิเคราะห์โวลท์ตก" },
     { q:"การติดตั้งภายนอกอาคาร EVSE ต้องพิจารณา IP/IK และการเดินสาย ข้อใดเหมาะสมที่สุด?",
       choices:["ร้อยท่อเกาะผนัง/ฝังดิน + เลือก IP/IK ตามสภาพแวดล้อม","เดินลอยบนรางเปิดโดยไม่ปิดฝา","ใช้ปลั๊กพ่วงชั่วคราว","เดินสายเปลือย"], correct:0,
-      reasons:[
-        "ถูก: ปกป้องกล/ความชื้นตามมาตรฐาน",
-        "ผิด: เสี่ยงเสียหาย",
-        "ผิด: อันตราย/ผิดมาตรฐาน",
-        "ผิด: อันตรายมาก"
-      ],
-      hints:["คำว่า IP/IK","ท่อ/ฝังดิน"],
-      why:"ความทนทาน/ปลอดภัยในสภาพกลางแจ้ง",
-      takeaway:"เลือก enclosure และวิธีเดินสายให้เหมาะ",
-      thinkQ:"พื้นที่กัดกร่อนสูงใช้วัสดุท่อแบบใด?",
-      thinkA:"ท่อโลหะกันสนิม/ท่อ PVC อุตสาหกรรมพร้อมคัปปลิงที่เหมาะสม" },
-
+      reasons:["ถูก: ปกป้องกล/ความชื้นตามมาตรฐาน","ผิด: เสี่ยงเสียหาย","ผิด: อันตราย/ผิดมาตรฐาน","ผิด: อันตรายมาก"],
+      hints:["คำว่า IP/IK","ท่อ/ฝังดิน"], why:"ความทนทาน/ปลอดภัยในสภาพกลางแจ้ง", takeaway:"เลือก enclosure และวิธีเดินสายให้เหมาะ", thinkQ:"พื้นที่กัดกร่อนสูงใช้วัสดุท่อแบบใด?", thinkA:"ท่อโลหะกันสนิม/ท่อ PVC อุตสาหกรรมพร้อมคัปปลิงที่เหมาะสม" },
     { q:"เพื่อหลีกเลี่ยง nuisance trip ระหว่าง RCD หลายตัว ข้อใดเป็นแนวทางที่ดี?",
       choices:["จัด RCD เป็นแบบไม่ซ้อนกันในสายทางเดียวกัน (selective) และแยกวงจร EVSE","ใส่ RCD หลายลูกซ้อนกันเพื่อชัวร์","ไม่ต้องมี RCD ใด ๆ","ย้าย RCD ไปไว้ที่เมนรวมทุกวงจร"], correct:0,
-      reasons:[
-        "ถูก: แยกวงจรช่วยลดผลกระทบและจัด selectivity ได้",
-        "ผิด: ซ้อนกันทำให้ทริปโดยไม่จำเป็น",
-        "ผิด: ผิดมาตรฐานความปลอดภัย",
-        "ผิด: รวมเมนทำให้วงจรอื่นโดนไปด้วย"
-      ],
-      hints:["คำว่า selective","แยกวงจร"],
-      why:"เพิ่มความเชื่อถือการจ่ายไฟ",
-      takeaway:"วางโครงสร้างตู้/บัส/อุปกรณ์ให้ชัด",
-      thinkQ:"ถ้าบังคับต้องซ้อน ควรใช้ชนิดใด?",
-      thinkA:"ใช้ RCD ชนิด S (selective) ที่ upstream ตามเงื่อนไขผู้ผลิต" }
+      reasons:["ถูก: แยกวงจรช่วยลดผลกระทบและจัด selectivity ได้","ผิด: ซ้อนกันทำให้ทริปโดยไม่จำเป็น","ผิด: ผิดมาตรฐานความปลอดภัย","ผิด: รวมเมนทำให้วงจรอื่นโดนไปด้วย"],
+      hints:["คำว่า selective","แยกวงจร"], why:"เพิ่มความเชื่อถือการจ่ายไฟ", takeaway:"วางโครงสร้างตู้/บัส/อุปกรณ์ให้ชัด", thinkQ:"ถ้าบังคับต้องซ้อน ควรใช้ชนิดใด?", thinkA:"ใช้ RCD ชนิด S (selective) ที่ upstream ตามเงื่อนไขผู้ผลิต" }
   ]
 };
 
 /* ========= Config ========= */
-const GAME_LEN = 10;        // จำนวนข้อที่เล่นต่อรอบ
-const T_LIMIT  = 45_000;    // 45 วินาทีต่อข้อ
+const GAME_LEN = 10; const T_LIMIT  = 45_000; // 45 วินาทีต่อข้อ
 
 /* ========= State ========= */
 let deck=[], idx=0, score=0, running=false, timer=null, tStart=0, userAnswers=[], order=[];
@@ -423,208 +312,46 @@ function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random
 function buildDeck(level){ const src = level==="Mix"? [...BANK.Easy,...BANK.Medium,...BANK.Hard] : BANK[level]||BANK.Medium; return shuffle(src.slice()).slice(0, Math.min(GAME_LEN, src.length)); }
 
 /* ========= WebAudio ========= */
-const AudioKit=(()=>{
-  const ctx=new (window.AudioContext||window.webkitAudioContext)();
-  const master=ctx.createGain(); master.gain.value=.0; // เริ่มปิดเสียง
-  const comp=ctx.createDynamicsCompressor();
-  comp.threshold.value=-18; comp.knee.value=12; comp.ratio.value=3; comp.attack.value=0.003; comp.release.value=0.2;
-  const limiter=ctx.createDynamicsCompressor();
-  limiter.threshold.value=-3; limiter.knee.value=0; limiter.ratio.value=20; limiter.attack.value=0.001; limiter.release.value=0.08;
-  master.connect(comp).connect(limiter).connect(ctx.destination);
-
-  const musicBus=ctx.createGain(); musicBus.gain.value=.26; musicBus.connect(master);
-  const percBus=ctx.createGain();  percBus.gain.value=.20;  percBus.connect(master);
-  const sfxBus=ctx.createGain();   sfxBus.gain.value=.35;   sfxBus.connect(master);
-
-  const musicFilter=ctx.createBiquadFilter(); musicFilter.type='lowpass'; musicFilter.frequency.value=1400; musicFilter.Q.value=0.7;
-  musicBus.disconnect(); musicBus.connect(musicFilter).connect(master);
-  const rev=ctx.createDelay(0.35); const revGain=ctx.createGain(); rev.delayTime.value=0.22; revGain.gain.value=0.12; sfxBus.connect(revGain).connect(rev).connect(master);
-  function resume(){ if(ctx.state==='suspended') ctx.resume(); }
-  function envGain(duration, peak=0.6){ const g=ctx.createGain(); g.gain.setValueAtTime(0.0001, ctx.currentTime); g.gain.exponentialRampToValueAtTime(peak, ctx.currentTime+0.01); g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime+duration); return g; }
-  function oscShot(f0, f1, dur, type='sine', bus=sfxBus){ const o=ctx.createOscillator(); const g=envGain(dur, .6); o.type=type; o.frequency.setValueAtTime(f0, ctx.currentTime); if(f1 && f1>0) o.frequency.exponentialRampToValueAtTime(f1, ctx.currentTime+dur); (o.connect(g)).connect(bus); o.start(); o.stop(ctx.currentTime+dur); }
-  function noise(duration, hp=800, bp=null, bus=sfxBus){ const buffer = ctx.createBuffer(1, Math.max(1, Math.floor(duration*ctx.sampleRate)), ctx.sampleRate); const data = buffer.getChannelData(0); for(let i=0;i<data.length;i++) data[i]= (Math.random()*2-1); const src = ctx.createBufferSource(); src.buffer=buffer; const hg=ctx.createBiquadFilter(); hg.type='highpass'; hg.frequency.value=hp; let chain=src; if(bp){ const band=ctx.createBiquadFilter(); band.type='bandpass'; band.frequency.value=bp; band.Q.value=0.8; chain.connect(band); chain=band; } const g=envGain(duration, .5); chain.connect(hg).connect(g).connect(bus); src.start(); src.stop(ctx.currentTime+duration); }
-  function kick(){ const o=ctx.createOscillator(); o.type='sine'; const g=ctx.createGain(); o.frequency.setValueAtTime(110, ctx.currentTime); o.frequency.exponentialRampToValueAtTime(45, ctx.currentTime+0.12); g.gain.setValueAtTime(0.0001, ctx.currentTime); g.gain.exponentialRampToValueAtTime(0.85, ctx.currentTime+0.005); g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime+0.25); o.connect(g).connect(percBus); o.start(); o.stop(ctx.currentTime+0.25); }
-  function snare(){ noise(0.15, 4000, 2400, percBus); }
-  function hat(){ noise(0.05, 6000, 8000, percBus); }
-  let playing=false, step=0, tempo=112, seqTimer=null; const pattern={ kick:[0,8], snare:[4,12], hat:[2,6,10,14], bass:[0,3,7,10,12,15] };
-  function musicNote(freq, dur=0.14){ const o=ctx.createOscillator(); o.type='square'; o.frequency.value=freq; const g=envGain(dur, .22); let panNode = null; try{ panNode = new StereoPannerNode(ctx, {pan:(Math.random()*1.6-0.8)}); }catch{} if(panNode){ o.connect(panNode).connect(g).connect(musicFilter); } else{ o.connect(g).connect(musicFilter); } o.start(); o.stop(ctx.currentTime+dur); }
-  function seqLoop(){ if(!playing) return; const beatMs = 60000/tempo; if(pattern.kick.includes(step%16)) kick(); if(pattern.snare.includes(step%16)) snare(); if(pattern.hat.includes(step%16)) hat(); if(pattern.bass.includes(step%16)){ const base=110; const degrees=[0,7,12,14,19]; const s=degrees[Math.floor(Math.random()*degrees.length)]; musicNote(base*Math.pow(2,s/12), .16); } step++; seqTimer=setTimeout(seqLoop, beatMs/2); }
-  function startBG(){ if(playing) return; resume(); playing=true; step=0; seqLoop(); }
-  function stopBG(){ playing=false; clearTimeout(seqTimer); }
-  function setUrgency(r){ tempo = 112 + (1-r)*84; percBus.gain.value = .14 + (1-r)*.22; musicBus.gain.value = .20 + (1-r)*.20; musicFilter.frequency.setTargetAtTime(900 + (1-r)*2900, ctx.currentTime, 0.12); }
-  function setMute(m){ master.gain.setTargetAtTime(m?0:0.9, ctx.currentTime, 0.05); }
-  function answer(ok=true){ resume(); const gNow = master.gain.value; master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setTargetAtTime(Math.max(0.001,gNow*0.85), ctx.currentTime, 0.01); master.gain.setTargetAtTime(gNow, ctx.currentTime+0.18, 0.08); if(ok){ oscShot(660, 1320, 0.18, 'sine', sfxBus); setTimeout(()=>oscShot(990, 1980, 0.12, 'triangle', sfxBus), 60); noise(0.12, 5000, 9000, sfxBus); if(document.querySelector('#haptic')?.checked) try{navigator.vibrate?.(30);}catch{} }else{ oscShot(300, 90, 0.28, 'sawtooth', sfxBus); if(document.querySelector('#haptic')?.checked) try{navigator.vibrate?.([10,40,10]);}catch{} } }
-  function timeup(){ resume(); oscShot(440, 220, 0.6, 'square', sfxBus); try{navigator.vibrate?.([20,60,20])}catch{} }
-  function hint(){ resume(); oscShot(880, 880, 0.08, 'sine', sfxBus); }
-  function ui(){ resume(); oscShot(1200, 1000, 0.06, 'triangle', sfxBus); }
-  function think(){ resume(); oscShot(660, 740, 0.1, 'sine', sfxBus); }
-  function fanfare(total=0){ resume(); const base = total>=8000? 523.25: total>=5000? 440: 392; [0,2,4,7,12].forEach((n,i)=>{ setTimeout(()=>oscShot(base*Math.pow(2,n/12), base*Math.pow(2,(n+12)/12), 0.16, 'triangle', sfxBus), i*110); }); noise(0.25, 4000, 6000, sfxBus); }
-  return {startBG,stopBG,setUrgency,setMute,answer,timeup,hint,ui,think,fanfare};
-})();
+const AudioKit=(()=>{ const ctx=new (window.AudioContext||window.webkitAudioContext)(); const master=ctx.createGain(); master.gain.value=.0; const comp=ctx.createDynamicsCompressor(); comp.threshold.value=-18; comp.knee.value=12; comp.ratio.value=3; comp.attack.value=0.003; comp.release.value=0.2; const limiter=ctx.createDynamicsCompressor(); limiter.threshold.value=-3; limiter.knee.value=0; limiter.ratio.value=20; limiter.attack.value=0.001; limiter.release.value=0.08; master.connect(comp).connect(limiter).connect(ctx.destination); const musicBus=ctx.createGain(); musicBus.gain.value=.26; musicBus.connect(master); const percBus=ctx.createGain();  percBus.gain.value=.20;  percBus.connect(master); const sfxBus=ctx.createGain();   sfxBus.gain.value=.35;   sfxBus.connect(master); const musicFilter=ctx.createBiquadFilter(); musicFilter.type='lowpass'; musicFilter.frequency.value=1400; musicFilter.Q.value=0.7; musicBus.disconnect(); musicBus.connect(musicFilter).connect(master); const rev=ctx.createDelay(0.35); const revGain=ctx.createGain(); rev.delayTime.value=0.22; revGain.gain.value=0.12; sfxBus.connect(revGain).connect(rev).connect(master); function resume(){ if(ctx.state==='suspended') ctx.resume(); } function envGain(duration, peak=0.6){ const g=ctx.createGain(); g.gain.setValueAtTime(0.0001, ctx.currentTime); g.gain.exponentialRampToValueAtTime(peak, ctx.currentTime+0.01); g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime+duration); return g; } function oscShot(f0, f1, dur, type='sine', bus=sfxBus){ const o=ctx.createOscillator(); const g=envGain(dur, .6); o.type=type; o.frequency.setValueAtTime(f0, ctx.currentTime); if(f1 && f1>0) o.frequency.exponentialRampToValueAtTime(f1, ctx.currentTime+dur); (o.connect(g)).connect(bus); o.start(); o.stop(ctx.currentTime+dur); } function noise(duration, hp=800, bp=null, bus=sfxBus){ const buffer = ctx.createBuffer(1, Math.max(1, Math.floor(duration*ctx.sampleRate)), ctx.sampleRate); const data = buffer.getChannelData(0); for(let i=0;i<data.length;i++) data[i]= (Math.random()*2-1); const src = ctx.createBufferSource(); src.buffer=buffer; const hg=ctx.createBiquadFilter(); hg.type='highpass'; hg.frequency.value=hp; let chain=src; if(bp){ const band=ctx.createBiquadFilter(); band.type='bandpass'; band.frequency.value=bp; band.Q.value=0.8; chain.connect(band); chain=band; } const g=envGain(duration, .5); chain.connect(hg).connect(g).connect(bus); src.start(); src.stop(ctx.currentTime+duration); } function kick(){ const o=ctx.createOscillator(); o.type='sine'; const g=ctx.createGain(); o.frequency.setValueAtTime(110, ctx.currentTime); o.frequency.exponentialRampToValueAtTime(45, ctx.currentTime+0.12); g.gain.setValueAtTime(0.0001, ctx.currentTime); g.gain.exponentialRampToValueAtTime(0.85, ctx.currentTime+0.005); g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime+0.25); o.connect(g).connect(percBus); o.start(); o.stop(ctx.currentTime+0.25); } function snare(){ noise(0.15, 4000, 2400, percBus); } function hat(){ noise(0.05, 6000, 8000, percBus); } let playing=false, step=0, tempo=112, seqTimer=null; const pattern={ kick:[0,8], snare:[4,12], hat:[2,6,10,14], bass:[0,3,7,10,12,15] }; function musicNote(freq, dur=0.14){ const o=ctx.createOscillator(); o.type='square'; o.frequency.value=freq; const g=envGain(dur, .22); let panNode = null; try{ panNode = new StereoPannerNode(ctx, {pan:(Math.random()*1.6-0.8)}); }catch{} if(panNode){ o.connect(panNode).connect(g).connect(musicFilter); } else{ o.connect(g).connect(musicFilter); } o.start(); o.stop(ctx.currentTime+dur); } function seqLoop(){ if(!playing) return; const beatMs = 60000/tempo; if(pattern.kick.includes(step%16)) kick(); if(pattern.snare.includes(step%16)) snare(); if(pattern.hat.includes(step%16)) hat(); if(pattern.bass.includes(step%16)){ const base=110; const degrees=[0,7,12,14,19]; const s=degrees[Math.floor(Math.random()*degrees.length)]; musicNote(base*Math.pow(2,s/12), .16); } step++; seqTimer=setTimeout(seqLoop, beatMs/2); } function startBG(){ if(playing) return; resume(); playing=true; step=0; seqLoop(); } function stopBG(){ playing=false; clearTimeout(seqTimer); } function setUrgency(r){ tempo = 112 + (1-r)*84; percBus.gain.value = .14 + (1-r)*.22; musicBus.gain.value = .20 + (1-r)*.20; musicFilter.frequency.setTargetAtTime(900 + (1-r)*2900, ctx.currentTime, 0.12); } function setMute(m){ master.gain.setTargetAtTime(m?0:0.9, ctx.currentTime, 0.05); } function answer(ok=true){ resume(); const gNow = master.gain.value; master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setTargetAtTime(Math.max(0.001,gNow*0.85), ctx.currentTime, 0.01); master.gain.setTargetAtTime(gNow, ctx.currentTime+0.18, 0.08); if(ok){ oscShot(660, 1320, 0.18, 'sine', sfxBus); setTimeout(()=>oscShot(990, 1980, 0.12, 'triangle', sfxBus), 60); noise(0.12, 5000, 9000, sfxBus); if(document.querySelector('#haptic')?.checked) try{navigator.vibrate?.(30);}catch{} }else{ oscShot(300, 90, 0.28, 'sawtooth', sfxBus); if(document.querySelector('#haptic')?.checked) try{navigator.vibrate?.([10,40,10]);}catch{} } } function timeup(){ resume(); oscShot(440, 220, 0.6, 'square', sfxBus); try{navigator.vibrate?.([20,60,20])}catch{} } function hint(){ resume(); oscShot(880, 880, 0.08, 'sine', sfxBus); } function ui(){ resume(); oscShot(1200, 1000, 0.06, 'triangle', sfxBus); } function think(){ resume(); oscShot(660, 740, 0.1, 'sine', sfxBus); } function fanfare(total=0){ resume(); const base = total>=8000? 523.25: total>=5000? 440: 392; [0,2,4,7,12].forEach((n,i)=>{ setTimeout(()=>oscShot(base*Math.pow(2,n/12), base*Math.pow(2,(n+12)/12), 0.16, 'triangle', sfxBus), i*110); }); noise(0.25, 4000, 6000, sfxBus); } return {startBG,stopBG,setUrgency,setMute,answer,timeup,hint,ui,think,fanfare}; })();
 
 /* ========= Confetti ========= */
-const FX=(()=>{
-  const c=$("#fx"), ctx=c.getContext("2d");
-  function resize(){c.width=innerWidth; c.height=innerHeight} addEventListener("resize",resize); resize();
-  let parts=[]; function boom(x=innerWidth/2,y=innerHeight/3,n=60){for(let i=0;i<n;i++) parts.push({x,y,r:Math.random()*3+2,vx:(Math.random()-0.5)*6,vy:(Math.random()-1.4)*8,a:1})}
-  ;(function loop(){ctx.clearRect(0,0,c.width,c.height); parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=0.15;p.a-=0.01}); parts=parts.filter(p=>p.a>0);
-    parts.forEach(p=>{ctx.globalAlpha=Math.max(0,p.a); ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`hsl(${(p.x+p.y)%360} 90% 60%)`; ctx.fill()});
-    requestAnimationFrame(loop);
-  })();
-  return {boom};
-})();
+const FX=(()=>{ const c=document.querySelector("#fx"), ctx=c.getContext("2d"); function resize(){c.width=innerWidth; c.height=innerHeight} addEventListener("resize",resize); resize(); let parts=[]; function boom(x=innerWidth/2,y=innerHeight/3,n=60){for(let i=0;i<n;i++) parts.push({x,y,r:Math.random()*3+2,vx:(Math.random()-0.5)*6,vy:(Math.random()-1.4)*8,a:1})} ;(function loop(){ctx.clearRect(0,0,c.width,c.height); parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=0.15;p.a-=0.01}); parts=parts.filter(p=>p.a>0); parts.forEach(p=>{ctx.globalAlpha=Math.max(0,p.a); ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`hsl(${(p.x+p.y)%360} 90% 60%)`; ctx.fill()}); requestAnimationFrame(loop); })(); return {boom}; })();
 
 /* ========= Flow ========= */
-function startGame(){
-  const lv = $("#level").value;
-  deck = buildDeck(lv);
-  idx=0; score=0; userAnswers=[];
-  $("#lvlTag").textContent = lv;
-  $("#score").textContent = "0";
-  show("#screen-quiz");
-  nextQuestion();
-  const muted = $("#mute").checked;
-  AudioKit.setMute(muted);
-  if(!muted) AudioKit.startBG();
-}
+function startGame(){ const lv = document.querySelector("#level").value; deck = buildDeck(lv); idx=0; score=0; userAnswers=[]; document.querySelector("#lvlTag").textContent = lv; document.querySelector("#score").textContent = "0"; show("#screen-quiz"); nextQuestion(); const muted = document.querySelector("#mute").checked; AudioKit.setMute(muted); if(!muted) AudioKit.startBG(); }
 
-function nextQuestion(){
-  running=false; clearInterval(timer);
-  const ex=$("#explain"); ex.classList.add("hidden"); ex.innerHTML="";
-  $("#footerNext").classList.remove("show");
-  const q = deck[idx];
-  $("#qno").textContent = `ข้อที่ ${idx+1}/${deck.length}`;
-  $("#qtext").textContent = q.q;
-  order = shuffle([0,1,2,3]);
-  const box=$("#choices"); box.innerHTML="";
-  order.forEach((origChoiceIdx, i)=>{
-    const b=document.createElement("button"); b.className="choice";
-    b.innerHTML=`<span class="letter">${"ABCD"[i]}</span> <span>${q.choices[origChoiceIdx]}</span>`;
-    b.onclick=()=>pick(i);
-    box.appendChild(b);
-  });
-  tStart=performance.now(); running=true; updateBar(1); AudioKit.setUrgency(1);
-  timer=setInterval(()=>{ const t=performance.now()-tStart; const left=Math.max(0, T_LIMIT - t); const ratio=left/T_LIMIT; updateBar(ratio); AudioKit.setUrgency(ratio); if(left<=0) timeUp(); }, 100);
-}
-function updateBar(r){
-  $("#bar").style.width=(r*100)+"%";
-  $("#bar").style.background = r<.25? `linear-gradient(90deg,var(--bad),#ff99a5)` : r<.55? `linear-gradient(90deg,var(--warn),#ffe69a)` : `linear-gradient(90deg,var(--ok),#6ee7ff)`;
-}
+function nextQuestion(){ running=false; clearInterval(timer); const ex=document.querySelector("#explain"); ex.classList.add("hidden"); ex.innerHTML=""; document.querySelector("#footerNext").classList.remove("show"); const q = deck[idx]; document.querySelector("#qno").textContent = `ข้อที่ ${idx+1}/${deck.length}`; document.querySelector("#qtext").textContent = q.q; order = shuffle([0,1,2,3]); const box=document.querySelector("#choices"); box.innerHTML=""; order.forEach((origChoiceIdx, i)=>{ const b=document.createElement("button"); b.className="choice"; b.innerHTML=`<span class="letter">${"ABCD"[i]}</span> <span>${q.choices[origChoiceIdx]}</span>`; b.onclick=()=>pick(i); box.appendChild(b); }); tStart=performance.now(); running=true; updateBar(1); AudioKit.setUrgency(1); timer=setInterval(()=>{ const t=performance.now()-tStart; const left=Math.max(0, 45_000 - t); const ratio=left/45_000; updateBar(ratio); AudioKit.setUrgency(ratio); if(left<=0) timeUp(); }, 100); }
+function updateBar(r){ const bar=document.querySelector("#bar"); bar.style.width=(r*100)+"%"; bar.style.background = r<.25? `linear-gradient(90deg,var(--bad),#ff99a5)` : r<.55? `linear-gradient(90deg,var(--warn),#ffe69a)` : `linear-gradient(90deg,var(--ok),#6ee7ff)`; }
 
-function pick(shuffledIndex){
-  if(!running) return; running=false; clearInterval(timer);
-  const q=deck[idx]; const selectedOrig = order[shuffledIndex]; const ch=[...document.querySelectorAll(".choice")]; const correctShuffledIndex = order.indexOf(q.correct);
-  ch.forEach((c,ii)=>{ c.disabled=true; if(ii===correctShuffledIndex) c.classList.add("correct"); if(ii===shuffledIndex && shuffledIndex!==correctShuffledIndex) c.classList.add("wrong"); });
-  const elapsed=Math.min(T_LIMIT, performance.now()-tStart), remain=T_LIMIT - elapsed; const ok = (selectedOrig===q.correct); const got = ok ? Math.max(0, Math.round(1000*(remain/T_LIMIT))) : 0; score+=got; $("#score").textContent=fmt(score);
-  userAnswers.push({i:selectedOrig, got, correct:q.correct, q:q.q, choices:q.choices, reasons:q.reasons, why:q.why, takeaway:q.takeaway, thinkQ:q.thinkQ, thinkA:q.thinkA, order:order.slice()});
-  showExplain(ok, got); AudioKit.answer(ok); if(ok && got>700) FX.boom();
-}
-function timeUp(){
-  running=false; clearInterval(timer);
-  const q=deck[idx]; const correctShuffledIndex = order.indexOf(q.correct);
-  const ch=[...document.querySelectorAll(".choice")]; ch.forEach((c,ii)=>{ c.disabled=true; if(ii===correctShuffledIndex) c.classList.add("correct") });
-  userAnswers.push({i:null, got:0, correct:q.correct, q:q.q, choices:q.choices, reasons:q.reasons, why:q.why, takeaway:q.takeaway, thinkQ:q.thinkQ, thinkA:q.thinkA, order:order.slice()});
-  showExplain(false,0,true); AudioKit.timeup();
-}
+function pick(shuffledIndex){ if(!running) return; running=false; clearInterval(timer); const q=deck[idx]; const selectedOrig = order[shuffledIndex]; const ch=[...document.querySelectorAll(".choice")]; const correctShuffledIndex = order.indexOf(q.correct); ch.forEach((c,ii)=>{ c.disabled=true; if(ii===correctShuffledIndex) c.classList.add("correct"); if(ii===shuffledIndex && shuffledIndex!==correctShuffledIndex) c.classList.add("wrong"); }); const elapsed=Math.min(45_000, performance.now()-tStart), remain=45_000 - elapsed; const ok = (selectedOrig===q.correct); const got = ok ? Math.max(0, Math.round(1000*(remain/45_000))) : 0; score+=got; document.querySelector("#score").textContent=fmt(score); userAnswers.push({i:selectedOrig, got, correct:q.correct, q:q.q, choices:q.choices, reasons:q.reasons, why:q.why, takeaway:q.takeaway, thinkQ:q.thinkQ, thinkA:q.thinkA, order:order.slice()}); showExplain(ok, got); AudioKit.answer(ok); if(ok && got>700) FX.boom(); }
+function timeUp(){ running=false; clearInterval(timer); const q=deck[idx]; const correctShuffledIndex = order.indexOf(q.correct); const ch=[...document.querySelectorAll(".choice")]; ch.forEach((c,ii)=>{ c.disabled=true; if(ii===correctShuffledIndex) c.classList.add("correct") }); userAnswers.push({i:null, got:0, correct:q.correct, q:q.q, choices:q.choices, reasons:q.reasons, why:q.why, takeaway:q.takeaway, thinkQ:q.thinkQ, thinkA:q.thinkA, order:order.slice()}); showExplain(false,0,true); AudioKit.timeup(); }
 
-function showExplain(correct, got, timeout=false){
-  const q=deck[idx]; const el=$("#explain");
-  const head = correct? `✅ ถูกต้อง! +${fmt(got)} คะแนน` : (timeout? "⌛ หมดเวลา!":"❌ ยังไม่ใช่");
-  const list = order.map((origIdx, i)=>{ const isRight = (origIdx===q.correct); const mark = isRight? "✅ ถูก" : "❌ ผิด"; const choiceText = q.choices[origIdx]; const reason = (q.reasons && q.reasons[origIdx]) ? q.reasons[origIdx] : (isRight? "ถูก: ตรงหลัก" : "ผิด: ไม่แก้สาเหตุ"); return `<li><b>${"ABCD"[i]}.</b> ${choiceText} — <b>${mark}</b> · <span>${reason}</span></li>`; }).join("");
-  el.innerHTML = `
-    <div><b>${head}</b></div>
-    <div class="sub"><b>คำถามชวนคิด:</b> ${q.thinkQ || "อะไรเสี่ยงต่อความปลอดภัย/ความต่อเนื่อง? และอะไรลดความร้อนได้ทันที?"}</div>
-    <div class="tools" style="margin-top:8px"><button class="btn tagBtn" id="btn-see-think">ดูเฉลยคำถามชวนคิด</button></div>
-    <div style="margin-top:8px"><b>เหตุผลของทุกตัวเลือก:</b><ul>${list}</ul></div>
-    <div style="margin-top:6px"><b>สรุปเหตุผล:</b> ${q.why}</div>
-    <div><b>Key Takeaway:</b> ${q.takeaway}</div>
-    <div class="sub" style="margin-top:8px">กด <b>ข้อต่อไป</b> ด้านล่างเพื่อไปต่อ</div>
-  `;
-  el.classList.remove("hidden");
-  $("#footerNext").classList.add("show");
-  const goNext = ()=>{ AudioKit.ui(); $("#footerNext").classList.remove("show"); idx++; if(idx<deck.length) nextQuestion(); else endGame(); };
-  $("#btn-next-fixed").onclick = goNext;
-  $("#btn-see-think").onclick=()=>{ const sol = q.thinkA || "จัดลำดับที่ลดความเสี่ยงสูงสุดต่อความปลอดภัย/ความต่อเนื่องก่อน"; const tag = document.createElement("div"); tag.innerHTML = `<div class="sub"><b>เฉลยคำถามชวนคิด:</b> ${sol}</div>`; el.appendChild(tag); AudioKit.think(); };
-  el.scrollIntoView({behavior:"smooth", block:"nearest"});
-}
+function showExplain(correct, got, timeout=false){ const q=deck[idx]; const el=document.querySelector("#explain"); const head = correct? `✅ ถูกต้อง! +${fmt(got)} คะแนน` : (timeout? "⌛ หมดเวลา!":"❌ ยังไม่ใช่"); const list = order.map((origIdx, i)=>{ const isRight = (origIdx===q.correct); const mark = isRight? "✅ ถูก" : "❌ ผิด"; const choiceText = q.choices[origIdx]; const reason = (q.reasons && q.reasons[origIdx]) ? q.reasons[origIdx] : (isRight? "ถูก: ตรงหลัก" : "ผิด: ไม่แก้สาเหตุ"); return `<li><b>${"ABCD"[i]}.</b> ${choiceText} — <b>${mark}</b> · <span>${reason}</span></li>`; }).join(""); el.innerHTML = `<div><b>${head}</b></div><div class="sub"><b>คำถามชวนคิด:</b> ${q.thinkQ || "อะไรเสี่ยงต่อความปลอดภัย/ความต่อเนื่อง? และอะไรลดความร้อนได้ทันที?"}</div><div class="tools" style="margin-top:8px"><button class="btn tagBtn" id="btn-see-think">ดูเฉลยคำถามชวนคิด</button></div><div style=\"margin-top:8px\"><b>เหตุผลของทุกตัวเลือก:</b><ul>${list}</ul></div><div style=\"margin-top:6px\"><b>สรุปเหตุผล:</b> ${q.why}</div><div><b>Key Takeaway:</b> ${q.takeaway}</div><div class=\"sub\" style=\"margin-top:8px\">กด <b>ข้อต่อไป</b> ด้านล่างเพื่อไปต่อ</div>`; el.classList.remove("hidden"); document.querySelector("#footerNext").classList.add("show"); const goNext = ()=>{ AudioKit.ui(); document.querySelector("#footerNext").classList.remove("show"); idx++; if(idx<deck.length) nextQuestion(); else endGame(); }; document.querySelector("#btn-next-fixed").onclick = goNext; document.querySelector("#btn-see-think").onclick=()=>{ const sol = q.thinkA || "จัดลำดับที่ลดความเสี่ยงสูงสุดต่อความปลอดภัย/ความต่อเนื่องก่อน"; const tag = document.createElement("div"); tag.innerHTML = `<div class=\"sub\"><b>เฉลยคำถามชวนคิด:</b> ${sol}</div>`; el.appendChild(tag); AudioKit.think(); }; el.scrollIntoView({behavior:"smooth", block:"nearest"}); }
 
-function endGame(){
-  show("#screen-result");
-  $("#finalScore").textContent=fmt(score);
-  const best = Number(localStorage.getItem("mea_best")||0);
-  const plays = Number(localStorage.getItem("mea_plays")||0)+1;
-  localStorage.setItem("mea_plays", String(plays));
-  if(score>best) localStorage.setItem("mea_best", String(score));
-  $("#plays").textContent=fmt(plays);
-  $("#best").textContent=fmt(Math.max(best,score));
-  $("#summary").innerHTML = score>=8000? "สุดยอด! นักออกแบบ EVSE ตัวจริง 👷‍♀️⚡"
-    : score>=5000? "ดีมาก! จับหลักลำดับงานได้เยอะแล้ว 💪"
-    : "โอเคเลย! ใช้ Hint/Think เพิ่ม แล้วยิงรอบใหม่ 🚀";
-  const stars = Math.min(5, Math.max(1, Math.floor(score/2000)));
-  $("#badge").innerHTML = `
-  <svg width="240" height="240" viewBox="0 0 240 240"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#ffd166"/><stop offset="1" stop-color="#ffe9a3"/></linearGradient></defs>
-    <circle cx="120" cy="120" r="105" fill="url(#g)" stroke="#f4c430" stroke-width="8"/>
-    <text x="120" y="86" text-anchor="middle" font-size="18" font-weight="800" fill="#7a5300">MEA‑SPU</text>
-    <text x="120" y="108" text-anchor="middle" font-size="14" font-weight="700" fill="#7a5300">EV Charger</text>
-    ${Array.from({length:stars}).map((_,i)=>`<polygon transform="translate(${60+i*24},140) scale(1.25)" points="10,1 12,7 18,7 13,11 15,17 10,13 5,17 7,11 2,7 8,7" fill="#7a5300"/>`).join("")}
-    <text x="120" y="192" text-anchor="middle" font-size="16" font-weight="900" fill="#7a5300">${fmt(score)} pts</text>
-  </svg>`;
-  if(score>=6000) FX.boom(innerWidth/2, innerHeight/2, 90);
-  AudioKit.stopBG(); setTimeout(()=>AudioKit.fanfare(score), 180);
-  const rows = userAnswers.map((r,i)=>{ const your = r.i==null? "—": "ABCD"[r.order.indexOf(r.i)]; const ans = "ABCD"[r.order.indexOf(r.correct)]; const ok = r.i===r.correct; return `<tr>
-      <td>${i+1}</td><td style="text-align:left">${r.q}</td>
-      <td>${your}</td><td>${ans}</td><td>${ok? "✅":"❌"}</td><td>${fmt(r.got)}</td>
-    </tr>`; }).join("");
-  $("#table").innerHTML = `
-    <div style="overflow:auto">
-      <table style="width:100%; border-collapse:collapse">
-        <thead><tr style="background:rgba(255,255,255,.08)"><th>#</th><th style="text-align:left">คำถาม</th><th>คุณตอบ</th><th>เฉลย</th><th>ผล</th><th>คะแนน</th></tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
-    </div>`;
-}
+function endGame(){ show("#screen-result"); document.querySelector("#finalScore").textContent=fmt(score); const best = Number(localStorage.getItem("mea_best")||0); const plays = Number(localStorage.getItem("mea_plays")||0)+1; localStorage.setItem("mea_plays", String(plays)); if(score>best) localStorage.setItem("mea_best", String(score)); document.querySelector("#plays").textContent=fmt(plays); document.querySelector("#best").textContent=fmt(Math.max(best,score)); document.querySelector("#summary").innerHTML = score>=8000? "สุดยอด! นักออกแบบ EVSE ตัวจริง 👷‍♀️⚡" : score>=5000? "ดีมาก! จับหลักลำดับงานได้เยอะแล้ว 💪" : "โอเคเลย! ใช้ Hint/Think เพิ่ม แล้วยิงรอบใหม่ 🚀"; const stars = Math.min(5, Math.max(1, Math.floor(score/2000))); document.querySelector("#badge").innerHTML = `<svg width=\"240\" height=\"240\" viewBox=\"0 0 240 240\"><defs><linearGradient id=\"g\" x1=\"0\" x2=\"1\"><stop offset=\"0\" stop-color=\"#ffd166\"/><stop offset=\"1\" stop-color=\"#ffe9a3\"/></linearGradient></defs><circle cx=\"120\" cy=\"120\" r=\"105\" fill=\"url(#g)\" stroke=\"#f4c430\" stroke-width=\"8\"/><text x=\"120\" y=\"86\" text-anchor=\"middle\" font-size=\"18\" font-weight=\"800\" fill=\"#7a5300\">MEA‑SPU</text><text x=\"120\" y=\"108\" text-anchor=\"middle\" font-size=\"14\" font-weight=\"700\" fill=\"#7a5300\">EV Charger</text>${Array.from({length:stars}).map((_,i)=>`<polygon transform=\"translate(${60+i*24},140) scale(1.25)\" points=\"10,1 12,7 18,7 13,11 15,17 10,13 5,17 7,11 2,7 8,7\" fill=\"#7a5300\"/>`).join("")}<text x=\"120\" y=\"192\" text-anchor=\"middle\" font-size=\"16\" font-weight=\"900\" fill=\"#7a5300\">${fmt(score)} pts</text></svg>`; if(score>=6000) FX.boom(innerWidth/2, innerHeight/2, 90); AudioKit.stopBG(); setTimeout(()=>AudioKit.fanfare(score), 180); const rows = userAnswers.map((r,i)=>{ const your = r.i==null? "—": "ABCD"[r.order.indexOf(r.i)]; const ans = "ABCD"[r.order.indexOf(r.correct)]; const ok = r.i===r.correct; return `<tr><td>${i+1}</td><td style=\"text-align:left\">${r.q}</td><td>${your}</td><td>${ans}</td><td>${ok? "✅":"❌"}</td><td>${fmt(r.got)}</td></tr>`; }).join(""); document.querySelector("#table").innerHTML = `<div style=\"overflow:auto\"><table style=\"width:100%; border-collapse:collapse\"><thead><tr style=\"background:rgba(255,255,255,.08)\"><th>#</th><th style=\"text-align:left\">คำถาม</th><th>คุณตอบ</th><th>เฉลย</th><th>ผล</th><th>คะแนน</th></tr></thead><tbody>${rows}</tbody></table></div>`; }
 
-function makeReview(){
-  const html = userAnswers.map((r,i)=>{ const list = r.order.map((origIdx, k)=>{ const isRight = (origIdx===r.correct); const mark = isRight? "✅ ถูก" : "❌ ผิด"; const reason = (r.reasons && r.reasons[origIdx]) ? r.reasons[origIdx] : (isRight? "ถูก" : "ผิด"); return `<li><b>${"ABCD"[k]}.</b> ${r.choices[origIdx]} — <b>${mark}</b> · ${reason}</li>`; }).join(""); return `
-    <div class="explain">
-      <div><b>ข้อ ${i+1}.</b> ${r.q}</div>
-      <div><b>เหตุผลของทุกตัวเลือก:</b><ul>${list}</ul></div>
-      <div>คำตอบของผู้ใช้: <b>${r.i==null? "—":"ABCD"[r.order.indexOf(r.i)]}</b> • เฉลย: <b>${"ABCD"[r.order.indexOf(r.correct)]}</b></div>
-      <div><b>คำถามชวนคิด:</b> ${r.thinkQ || "-"}</div>
-      <div><b>เฉลยคำถามชวนคิด:</b> ${r.thinkA || "-"}</div>
-      <div><b>สรุปเหตุผล:</b> ${r.why}</div>
-      <div><b>Key Takeaway:</b> ${r.takeaway}</div>
-    </div>`; }).join("");
-  $("#reviewList").innerHTML = html || `<div class="sub">ยังไม่มีข้อมูล ลองเล่นเกมก่อนนะ</div>`;
-}
+function makeReview(){ const html = userAnswers.map((r,i)=>{ const list = r.order.map((origIdx, k)=>{ const isRight = (origIdx===r.correct); const mark = isRight? "✅ ถูก" : "❌ ผิด"; const reason = (r.reasons && r.reasons[origIdx]) ? r.reasons[origIdx] : (isRight? "ถูก" : "ผิด"); return `<li><b>${"ABCD"[k]}.</b> ${r.choices[origIdx]} — <b>${mark}</b> · ${reason}</li>`; }).join(""); return `<div class=\"explain\"><div><b>ข้อ ${i+1}.</b> ${r.q}</div><div><b>เหตุผลของทุกตัวเลือก:</b><ul>${list}</ul></div><div>คำตอบของผู้ใช้: <b>${r.i==null? "—":"ABCD"[r.order.indexOf(r.i)]}</b> • เฉลย: <b>${"ABCD"[r.order.indexOf(r.correct)]}</b></div><div><b>คำถามชวนคิด:</b> ${r.thinkQ || "-"}</div><div><b>เฉลยคำถามชวนคิด:</b> ${r.thinkA || "-"}</div><div><b>สรุปเหตุผล:</b> ${r.why}</div><div><b>Key Takeaway:</b> ${r.takeaway}</div></div>`; }).join(""); document.querySelector("#reviewList").innerHTML = html || `<div class=\"sub\">ยังไม่มีข้อมูล ลองเล่นเกมก่อนนะ</div>`; }
 
 /* ========= Bindings ========= */
-$("#btn-start").onclick=()=>{ AudioKit.ui(); startGame(); };
-$("#btn-start2").onclick=()=>{ AudioKit.ui(); startGame(); };
-$("#btn-how").onclick=()=>{ AudioKit.ui(); show("#screen-how")};
-$("#btn-back").onclick=()=>{ AudioKit.ui(); show("#screen-home")};
-$("#btn-retry").onclick=()=>{ AudioKit.ui(); startGame(); };
-$("#btn-home").onclick=()=>{ AudioKit.ui(); show("#screen-home")};
-$("#btn-home2").onclick=()=>{ AudioKit.ui(); show("#screen-home")};
-$("#btn-review").onclick=()=>{ AudioKit.ui(); show("#screen-review"); makeReview()};
-$("#btn-skip").onclick=()=>{ AudioKit.timeup(); timeUp(); };
-$("#btn-hint1").onclick=()=>{ AudioKit.hint(); sayHint(0); };
-$("#btn-hint2").onclick=()=>{ AudioKit.hint(); sayHint(1); };
-$("#btn-think").onclick=()=>{ const q=deck[idx]; const el=$("#explain"); const msg = `<div class=\"sub\"><b>คำถามชวนคิด:</b> ${q.thinkQ || "อะไรเสี่ยงต่อความปลอดภัย/ความต่อเนื่อง? และอะไรลดความร้อนได้ทันที?"}</div>`; if(el.classList.contains("hidden")){ el.classList.remove("hidden"); el.innerHTML=msg; } else{ el.innerHTML += msg; } AudioKit.think(); };
-$("#btn-think-sol").onclick=()=>{ const q=deck[idx]; const el=$("#explain"); const ans = `<div class=\"sub\"><b>เฉลยคำถามชวนคิด:</b> ${q.thinkA || "จัดลำดับที่ลดความเสี่ยงสูงสุดต่อความปลอดภัย/ความต่อเนื่องก่อน"}</div>`; if(el.classList.contains("hidden")){ el.classList.remove("hidden"); el.innerHTML=ans; } else{ el.innerHTML += ans; } AudioKit.think(); };
-$("#mute").onchange=e=>{ AudioKit.setMute(e.target.checked); if(!e.target.checked) AudioKit.startBG(); else AudioKit.stopBG(); };
-$("#mute2").onchange=e=>{ $("#mute").checked=e.target.checked; AudioKit.setMute(e.target.checked); if(!e.target.checked) AudioKit.startBG(); else AudioKit.stopBG(); };
-function sayHint(n){ const q=deck[idx]; const el=$("#explain"); const msg = q.hints?.[n] || "โฟกัสความปลอดภัย/ความต่อเนื่องก่อนเสมอ"; if(el.classList.contains("hidden")){ el.classList.remove("hidden"); el.innerHTML=`<div class=\"sub\"><b>Hint:</b> ${msg}</div>`; } else{ el.innerHTML += `<div>${msg}</div>`; } }
+document.querySelector("#btn-start").onclick=()=>{ AudioKit.ui(); startGame(); };
+document.querySelector("#btn-start2").onclick=()=>{ AudioKit.ui(); startGame(); };
+document.querySelector("#btn-how").onclick=()=>{ AudioKit.ui(); show("#screen-how")};
+document.querySelector("#btn-back").onclick=()=>{ AudioKit.ui(); show("#screen-home")};
+document.querySelector("#btn-retry").onclick=()=>{ AudioKit.ui(); startGame(); };
+document.querySelector("#btn-home").onclick=()=>{ AudioKit.ui(); show("#screen-home")};
+document.querySelector("#btn-home2").onclick=()=>{ AudioKit.ui(); show("#screen-home")};
+document.querySelector("#btn-review").onclick=()=>{ AudioKit.ui(); show("#screen-review"); makeReview()};
+document.querySelector("#btn-skip").onclick=()=>{ AudioKit.timeup(); timeUp(); };
+document.querySelector("#btn-hint1").onclick=()=>{ AudioKit.hint(); sayHint(0); };
+document.querySelector("#btn-hint2").onclick=()=>{ AudioKit.hint(); sayHint(1); };
+document.querySelector("#btn-think").onclick=()=>{ const q=deck[idx]; const el=document.querySelector("#explain"); const msg = `<div class=\"sub\"><b>คำถามชวนคิด:</b> ${q.thinkQ || "อะไรเสี่ยงต่อความปลอดภัย/ความต่อเนื่อง? และอะไรลดความร้อนได้ทันที?"}</div>`; if(el.classList.contains("hidden")){ el.classList.remove("hidden"); el.innerHTML=msg; } else{ el.innerHTML += msg; } AudioKit.think(); };
+document.querySelector("#btn-think-sol").onclick=()=>{ const q=deck[idx]; const el=document.querySelector("#explain"); const ans = `<div class=\"sub\"><b>เฉลยคำถามชวนคิด:</b> ${q.thinkA || "จัดลำดับที่ลดความเสี่ยงสูงสุดต่อความปลอดภัย/ความต่อเนื่องก่อน"}</div>`; if(el.classList.contains("hidden")){ el.classList.remove("hidden"); el.innerHTML=ans; } else{ el.innerHTML += ans; } AudioKit.think(); };
+document.querySelector("#mute").onchange=e=>{ AudioKit.setMute(e.target.checked); if(!e.target.checked) AudioKit.startBG(); else AudioKit.stopBG(); };
+document.querySelector("#mute2").onchange=e=>{ document.querySelector("#mute").checked=e.target.checked; AudioKit.setMute(e.target.checked); if(!e.target.checked) AudioKit.startBG(); else AudioKit.stopBG(); };
+function sayHint(n){ const q=deck[idx]; const el=document.querySelector("#explain"); const msg = q.hints?.[n] || "โฟกัสความปลอดภัย/ความต่อเนื่องก่อนเสมอ"; if(el.classList.contains("hidden")){ el.classList.remove("hidden"); el.innerHTML=`<div class=\"sub\"><b>Hint:</b> ${msg}</div>`; } else{ el.innerHTML += `<div>${msg}</div>`; } }
 
 /* ========= Boot ========= */
-(function init(){
-  const best = Number(localStorage.getItem("mea_best")||0);
-  const plays = Number(localStorage.getItem("mea_plays")||0);
-  $("#best").textContent=fmt(best);
-  $("#plays").textContent=fmt(plays);
-  show("#screen-home");
-  document.body.addEventListener("click", ()=>{ try{AudioKit.setMute(true);}catch{} }, {once:true});
-})();
+(function init(){ const best = Number(localStorage.getItem("mea_best")||0); const plays = Number(localStorage.getItem("mea_plays")||0); document.querySelector("#best").textContent=fmt(best); document.querySelector("#plays").textContent=fmt(plays); show("#screen-home"); document.body.addEventListener("click", ()=>{ try{AudioKit.setMute(true);}catch{} }, {once:true}); })();
 </script>
 </body>
 </html>
