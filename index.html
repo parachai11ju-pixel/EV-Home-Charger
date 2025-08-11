@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>พลิกโฉมงานวิศวกรรมด้วย AI — ซ่อมก่อนพัง บริหารก่อนวิกฤติ (MEA‑SPU) Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{--pri:#7c3aed;--sec:#22d3ee;--ok:#10b981;--bad:#ef4444;--bg:#0b1020}
+    html,body{height:100%}
+    body{font-family:'Kanit',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif;background:radial-gradient(1200px 600px at 10% -10%,#1f1455 0%,#0b1020 60%,#050812 100%) fixed;color:#e6e9f5}
+    .glass{backdrop-filter: blur(10px); background:linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.04)); border:1px solid rgba(255,255,255,0.12)}
+    .btn{display:block;width:100%;padding:14px 18px;border-radius:1rem;border:1px solid rgba(255,255,255,.2);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.04));}
+    .btn:hover{transform:translateY(-1px);}
+    .choice{transition:transform .08s ease, background .2s ease}
+    .choice.correct{background:linear-gradient(180deg, rgba(16,185,129,.25), rgba(16,185,129,.15)); border-color: rgba(16,185,129,.6)}
+    .choice.wrong{background:linear-gradient(180deg, rgba(239,68,68,.25), rgba(239,68,68,.15)); border-color: rgba(239,68,68,.6)}
+    .timerbar{height:10px;border-radius:999px;background:linear-gradient(90deg,var(--sec),#34d399,#f59e0b,#ef4444)}
+    .flash{animation:flash .5s ease}
+    @keyframes flash{0%{box-shadow:0 0 0 0 rgba(124,58,237,.8)}100%{box-shadow:0 0 0 20px rgba(124,58,237,0)}}
+  </style>
+</head>
+<body>
+  <div class="min-h-full p-4 sm:p-6">
+    <header class="glass rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6">
+      <div class="flex items-center justify-between gap-3">
+        <div class="flex-1">
+          <h1 class="text-2xl sm:text-4xl font-extrabold leading-tight">
+            พลิกโฉมงานวิศวกรรมด้วย <span class="text-[var(--sec)]">AI</span> — ซ่อมก่อนพัง บริหารก่อนวิกฤติ
+          </h1>
+          <p class="text-sm sm:text-base opacity-80 mt-1">Showcase (MEA‑SPU) • พัฒนาโดย <strong>ผศ.ดร.ภรชัย จูอนุวัฒนกุล</strong></p>
+        </div>
+        <div class="shrink-0 text-right">
+          <button id="musicToggle" class="btn text-sm sm:text-base">🔊 เพลงพื้นหลัง</button>
+          <button id="sfxToggle" class="btn mt-2 text-sm sm:text-base">🎧 เอฟเฟกต์</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="grid lg:grid-cols-3 gap-4 sm:gap-6">
+      <!-- Left: Controls -->
+      <section class="glass rounded-2xl p-4 sm:p-6 lg:col-span-1">
+        <h2 class="text-xl sm:text-2xl font-bold mb-2">🎮 เริ่มเกมทดสอบความรู้</h2>
+        <p class="text-sm opacity-80 mb-4">รูปแบบคำถาม 4 ตัวเลือก • จำกัดเวลา <b>45 วิ</b> ต่อข้อ • ตอบเร็วได้คะแนนใกล้ <b>1,000</b> ต่อข้อ</p>
+
+        <label class="block text-base mb-2">โหมดโจทย์</label>
+        <div class="grid grid-cols-2 gap-2">
+          <button data-mode="Easy" class="btn mode">🍭 Easy (5 ข้อ)</button>
+          <button data-mode="Medium" class="btn mode">⚙️ Medium (5 ข้อ)</button>
+          <button data-mode="Hard" class="btn mode">🛠️ Hard (5 ข้อ)</button>
+          <button data-mode="Mixed" class="btn mode">🌀 Mixed (10 ข้อ)</button>
+        </div>
+
+        <div class="mt-6">
+          <label class="block text-base mb-2">สไตล์การสอนแบบโสกราติส (Socrates)</label>
+          <p class="text-sm opacity-80">ทุกข้อจะถามต่อว่า <em>“ทำไมถึงเลือกข้อนี้?”</em> เพื่อชวนคิดเชิงเหตุผล</p>
+        </div>
+
+        <div class="mt-6">
+          <h3 class="font-bold mb-2">🏆 สรุปคะแนน</h3>
+          <div class="grid grid-cols-2 gap-2 text-center">
+            <div class="glass rounded-xl p-3">
+              <div class="text-3xl font-extrabold" id="score">0</div>
+              <div class="text-xs opacity-80">คะแนนรวม</div>
+            </div>
+            <div class="glass rounded-xl p-3">
+              <div class="text-3xl font-extrabold" id="streak">0🔥</div>
+              <div class="text-xs opacity-80">สถิติถูกต่อเนื่อง</div>
+            </div>
+          </div>
+          <button id="resetBtn" class="btn mt-3">รีเซ็ตเกม ♻️</button>
+        </div>
+
+        <div class="mt-6">
+          <h3 class="font-bold mb-2">📚 อ้างอิงมาตรฐาน</h3>
+          <ul class="text-sm leading-relaxed list-disc ml-5 opacity-90">
+            <li>มาตรฐานติดตั้ง EVSE: <b>MPESTD‑001:2563</b> (MEA/PEA/กกพ)</li>
+            <li>ข้อกำหนดสถานีอัดประจุ: <b>MEA 2560</b></li>
+            <li>IEC 61851, IEC 62196, IEC 62423 (RCD Type B), IEC 62955 (RDC‑DD)</li>
+            <li>การเลือกสาย <b>IEC 01 (THW)</b> วิธีร้อยท่อเกาะผนัง: ตารางกระแสอ้างอิงภาคสนาม</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Right: Gameplay -->
+      <section class="glass rounded-2xl p-4 sm:p-6 lg:col-span-2">
+        <div class="flex items-center justify-between gap-3 mb-3">
+          <div class="flex items-center gap-3">
+            <span class="text-sm opacity-80">ข้อที่</span>
+            <span id="qIndex" class="text-2xl font-extrabold">0</span>
+            <span class="opacity-60">/</span>
+            <span id="qTotal" class="text-xl">0</span>
+          </div>
+          <div class="flex-1 mx-4">
+            <div class="w-full bg-white/10 rounded-full overflow-hidden">
+              <div id="timerBar" class="timerbar" style="width:100%"></div>
+            </div>
+            <div class="text-right text-xs opacity-70 mt-1"><span id="secLeft">45</span>s</div>
+          </div>
+          <div class="text-right">
+            <div class="text-xs opacity-70">โหมด</div>
+            <div id="modeLabel" class="text-lg font-bold">—</div>
+          </div>
+        </div>
+
+        <div id="card" class="rounded-2xl p-4 sm:p-6 bg-white/5">
+          <div id="stemWrap">
+            <h2 id="stem" class="text-xl sm:text-2xl font-bold leading-snug">เลือกโหมดเพื่อเริ่มเกม ✨</h2>
+            <p class="text-sm opacity-80 mt-2">มาตรฐาน MEA • IEC • IEEE + ภาคสนามจริง — สำหรับ Wall Charger โหมด 3 (1เฟส ≤7.4kW, 3เฟส ≤11kW)</p>
+          </div>
+
+          <div id="choices" class="grid gap-2 mt-4"></div>
+
+          <div id="actions" class="mt-4 hidden">
+            <button id="hintBtn" class="btn">💡 คำใบ้</button>
+            <button id="whyBtn" class="btn mt-2">🤔 ทำไมถึงเลือกข้อนี้?</button>
+          </div>
+
+          <div id="feedback" class="mt-4 hidden">
+            <div id="resultText" class="text-lg font-bold"></div>
+            <div id="explain" class="text-sm opacity-90 mt-2 leading-relaxed"></div>
+            <div id="ref" class="text-xs opacity-70 mt-1"></div>
+            <button id="nextBtn" class="btn mt-4">➡️ ข้อต่อไป</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="mt-6 text-center opacity-70 text-xs">
+      © 2025 MEA‑SPU • Active Learning with AI — Designed for Thai Gen Z 📱⚡
+    </footer>
+  </div>
+
+  <script>
+    // ====== Simple WebAudio background music & SFX ======
+    const audio = {
+      ctx:null, musicGain:null, sfxGain:null, musicOn:true, sfxOn:true,
+      ensure(){ if(!this.ctx){ this.ctx = new (window.AudioContext||window.webkitAudioContext)(); this.musicGain=this.ctx.createGain(); this.sfxGain=this.ctx.createGain(); this.musicGain.gain.value=.25; this.sfxGain.gain.value=.6; this.musicGain.connect(this.ctx.destination); this.sfxGain.connect(this.ctx.destination);} },
+      beep(type='ok'){ if(!this.sfxOn) return; this.ensure(); const o=this.ctx.createOscillator(); const g=this.ctx.createGain(); o.connect(g); g.connect(this.sfxGain); o.type= type==='ok'? 'triangle':'square'; o.frequency.setValueAtTime(type==='ok'?880:220,this.ctx.currentTime); g.gain.setValueAtTime(.001,this.ctx.currentTime); g.gain.exponentialRampToValueAtTime(.5,this.ctx.currentTime+.01); g.gain.exponentialRampToValueAtTime(.001,this.ctx.currentTime+.2); o.start(); o.stop(this.ctx.currentTime+.21); },
+      boom(){ if(!this.sfxOn) return; this.ensure(); const o=this.ctx.createOscillator(); const g=this.ctx.createGain(); o.connect(g); g.connect(this.sfxGain); o.type='sawtooth'; o.frequency.setValueAtTime(200,this.ctx.currentTime); o.frequency.exponentialRampToValueAtTime(60,this.ctx.currentTime+.3); g.gain.setValueAtTime(.6,this.ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001,this.ctx.currentTime+.35); o.start(); o.stop(this.ctx.currentTime+.36); },
+      music(){ if(!this.musicOn) return; this.ensure(); // chill arpeggio loop
+        const root=220; const seq=[0,4,7,12,7,4]; let i=0; const play=()=>{ if(!this.musicOn) return; const now=this.ctx.currentTime; const o=this.ctx.createOscillator(); const g=this.ctx.createGain(); o.type='sine'; o.frequency.value=root*Math.pow(2,seq[i%seq.length]/12); g.gain.value=.0001; o.connect(g); g.connect(this.musicGain); o.start(now); g.gain.exponentialRampToValueAtTime(.08, now+.01); g.gain.exponentialRampToValueAtTime(.0001, now+.45); o.stop(now+.5); i++; setTimeout(play, 480); }; play(); }
+    };
+
+    const musicBtn=document.getElementById('musicToggle');
+    const sfxBtn=document.getElementById('sfxToggle');
+    musicBtn.addEventListener('click',()=>{ audio.musicOn=!audio.musicOn; musicBtn.textContent = audio.musicOn? '🔊 เพลงพื้นหลัง':'🔇 ปิดเพลง'; if(audio.musicOn){ audio.music(); }});
+    sfxBtn.addEventListener('click',()=>{ audio.sfxOn=!audio.sfxOn; sfxBtn.textContent = audio.sfxOn? '🎧 เอฟเฟกต์':'🚫 ปิดเอฟเฟกต์'; });
+    // kick music on first interaction
+    window.addEventListener('pointerdown',()=>{ audio.music(); },{once:true});
+
+    // ====== Quiz Data (Thai) ======
+    // Note: คะแนนต่อข้อ = Math.round(1000 * (เวลาที่เหลือ/45))
+    // อ้างอิงหลัก ๆ: MPESTD-001:2563, MEA 2560, IEC 61851/62196/62423/62955, ตารางสาย IEC 01 (THW)
+
+    const QUESTIONS = [
+      // Easy (5)
+      {id:'E1', level:'Easy', stem:'วงจรย่อยที่จ่ายไฟให้ EVSE ต้องติดตั้ง RCD ชนิดใดเป็นหลัก?', choices:['Type A','Type B','Type AC','ไม่จำเป็น'], answer:1, hint:'มีกระแสตรงรั่วได้ ต้องรองรับ DC', explain:'มาตรฐานกำหนดให้ใช้ RCD Type B (IΔn ≤ 30 mA) หรือใช้ Type A/F ร่วมกับ RDC‑DD ≥6 mA ได้ แต่หลักคือ Type B', ref:'MPESTD‑001:2563 ข้อ 3.1 ข) ; IEC 62423, IEC 62955'},
+      {id:'E2', level:'Easy', stem:'ตำแหน่งเต้ารับโหมด 2/3 ควรสูงจากพื้นเท่าใด?', choices:['0.3–0.6 ม.','≥0.75 ม. แต่ ≤1.2 ม.','≥1.5 ม.','ไม่กำหนด'], answer:1, hint:'คิดถึงความปลอดภัยและการใช้งาน', explain:'แนะนำให้อยู่สูงจากพื้นจอดไม่น้อยกว่า 0.75 เมตร และไม่เกิน 1.2 เมตร', ref:'MPESTD‑001:2563 ข้อ 3.7, 5.15'},
+      {id:'E3', level:'Easy', stem:'ความยาวสายชาร์จขาออกของเครื่องอัดประจุไฟฟ้า (AC) ควรไม่เกินกี่เมตร?', choices:['5 ม.','7.5 ม.','10 ม.','ไม่เกิน 3 ม.'], answer:1, hint:'มาตรฐานระบุชัดเจน', explain:'ความยาวสายขาออกไม่ควรเกิน 7.5 เมตร', ref:'MPESTD‑001:2563 ข้อ 6.5 / MEA 5.14'},
+      {id:'E4', level:'Easy', stem:'เลือกขนาดสายต้องอิงกระแสจริงคูณตัวคูณความปลอดภัยเท่าไร?', choices:['×1.10','×1.25','×1.50','×2.00'], answer:1, hint:'คำตอบยอดฮิตในการออกแบบวงจรย่อย EVSE', explain:'สายวงจรย่อยที่จ่าย EVSE ต้องมีพิกัดไม่น้อยกว่า 1.25 เท่าของกระแสด้านเข้า EVSE', ref:'MPESTD‑001:2563 ข้อ 3.4 / MEA 5.3'},
+      {id:'E5', level:'Easy', stem:'การเดินสายภายนอกอาคารสำหรับ EVSE ในบ้านควรใช้วิธีใด?', choices:['เดินลอยเปลือย','ร้อยท่อฝังดินหรือร้อยท่อเกาะผนัง','เดินใต้พรม','เดินในเพดานแบบไม่ร้อยท่อ'], answer:1, hint:'ต้องกันกระแทกและสภาพอากาศ', explain:'กำหนดให้ใช้ร้อยท่อฝังดิน หรือร้อยท่อเกาะผนัง เท่านั้น', ref:'MPESTD‑001:2563 ข้อ 3.8'},
+
+      // Medium (5)
+      {id:'M1', level:'Medium', stem:'ถ้า EVSE 1 เฟส 7.4 kW, pf≈1 ที่ 230 V กระแสด้านเข้าประมาณเท่าไร?', choices:['16 A','25 A','32 A','40 A'], answer:2, hint:'I = P/(√3 V LL pf) ใช้ 1 เฟส = P/(V pf)', explain:'1 เฟส: I=P/(V·pf)=7400/(230×1) ≈ 32.17 A ⇒ เลือกพิกัด 32 A', ref:'หลักการคำนวณกำลัง 1 เฟส / pf ต้องใส่แม้ pf≈1'},
+      {id:'M2', level:'Medium', stem:'จาก M1 ควรเลือกสายชนิด IEC 01 (THW) ร้อยท่อเกาะผนัง ขนาดอย่างน้อยกี่ตร.มม. (ตัวเดี่ยว กลุ่มที่2)?', choices:['2.5 ตร.มม. (21A)','4 ตร.มม. (28A)','6 ตร.มม. (36A)','10 ตร.มม. (50A)'], answer:2, hint:'อย่าลืม ×1.25 จากกระแสจริงก่อนเทียบตาราง', explain:'Iจริง≈32 A ⇒ ต้องการพิกัดสาย ≥1.25×32 ≈ 40 A. ตาราง IEC 01 (ร้อยท่อเกาะผนัง) 6 ตร.มม. รับ ~36A ยังไม่พอ ⇒ เลือก 10 ตร.มม. 50A เพื่อผ่านเกณฑ์', ref:'ตาราง IEC 01 (THW) กลุ่มที่2 ร้อยท่อเกาะผนัง'},
+      {id:'M3', level:'Medium', stem:'วงจรย่อยที่จ่าย EVSE ต้องมี Demand factor เท่าไร?', choices:['0.8','0.9','1.0','ขึ้นกับผู้ออกแบบ'], answer:2, hint:'โหลดชาร์จต้องเผื่อเต็ม', explain:'กำหนดให้ใช้ Demand factor = 1 สำหรับวงจรย่อย EVSE', ref:'MPESTD‑001:2563 ข้อ 3.5 / MEA 5.4'},
+      {id:'M4', level:'Medium', stem:'ระบบสายดินที่แนะนำเมื่อรับไฟแรงต่ำจาก กฟน. สำหรับ EV Load คือแบบใด?', choices:['TN‑C','TN‑C‑S โดยไม่มีมาตรการเพิ่ม','TT (แยกหลักดินจากระบบเดิม)','IT'], answer:2, hint:'ต้องแยกหลักดินจากนิวทรัล', explain:'กรณีรับไฟแรงต่ำจากการไฟฟ้า แนะนำจัดวางแบบ TT แยกหลักดินอิสระ', ref:'MEA 5.11.1 ; MPESTD‑001 ภาคผนวก ข.'},
+      {id:'M5', level:'Medium', stem:'ระยะห่างหลักดินของระบบ TT ใหม่กับหลักดินระบบเดิมควรไม่น้อยกว่าเท่าไร?', choices:['0.5 ม.','1.0 ม.','2.0 ม.','5.0 ม.'], answer:2, hint:'ดูหัวข้อ Earthing TT', explain:'ต้องห่างไม่น้อยกว่า 2.0 เมตร', ref:'MEA 5.11.1 ; MPESTD‑001 ข้อ 4.2.1 (1) ระยะหลักดิน ≥2.0 ม.'},
+
+      // Hard (5)
+      {id:'H1', level:'Hard', stem:'ติดตั้ง RCD Type B ซ้อนใต้เมนที่มี RCD Type A อยู่ได้หรือไม่?', choices:['ได้ทุกกรณี','ไม่ได้ ต้องไม่ติดใต้ RCD อื่นที่อยู่เมน','ได้ถ้า IΔn เท่ากัน','ได้เฉพาะโหลด <32A'], answer:1, hint:'ระวังการจัดเรียง RCD ต่างชนิด', explain:'ระบุว่า RCD Type B ต้องไม่ติดตั้งภายใต้วงจรที่มี RCD Type อื่นอยู่ที่เมนของวงจรนั้น ๆ', ref:'MPESTD‑001:2563 หมายเหตุ ข้อ 3.1 ข) (3.)'},
+      {id:'H2', level:'Hard', stem:'กรณี TN‑C‑S ทั้งระบบ ต้องมีมาตรการเพิ่มอย่างใดอย่างหนึ่ง ข้อใด “ไม่ใช่” ตัวเลือกที่มาตรฐานยอมรับ?', choices:['คุม touch voltage >70V ตัดภายใน 5s','ลดค่า Rearth ตามตารางกำหนด','ติดตั้ง U/O‑V protection แทนมาตรการอื่น (เฉพาะบางพื้นที่)','ไม่ต้องทำอะไรเพิ่ม'], answer:3, hint:'ตัวเลือกที่ผิดจริง ๆ คือ…', explain:'ต้องมีมาตรการเพิ่มตามข้อ 4.2.2 เช่น ค่าความต้านทานดินตามตาราง หรืออุปกรณ์ตัดภายใน 5s ฯลฯ การ “ไม่ต้องทำอะไรเพิ่ม” ขัดมาตรฐาน', ref:'MPESTD‑001:2563 ข้อ 4.2.2'},
+      {id:'H3', level:'Hard', stem:'การตรวจสอบการทำงานของ RCD สำหรับบ้าน/อาคารทั่วไปตาม MPESTD‑001 ควรทุกกี่เดือน?', choices:['ทุก 1 เดือน','ทุก 3 เดือน','ทุก 6 เดือน','ทุก 12 เดือน'], answer:2, hint:'MPESTD vs MEA คนละบริบท', explain:'MPESTD‑001 กำหนดให้ตรวจทุก 6 เดือน (ปุ่ม Test) ส่วนเอกสาร MEA สำหรับสถานีเชิงพาณิชย์กำหนด 3 เดือน', ref:'MPESTD‑001:2563 ข้อ 3.11 ; MEA 5.20'},
+      {id:'H4', level:'Hard', stem:'Wall Charger โหมด 3 สามเฟส 11 kW ที่ 400 V, pf≈1 กระแสต่อเฟสประมาณเท่าไร แล้วเลือกเบรกเกอร์ใกล้เคียง?', choices:['I≈16 A/phase, MCB 16 A','I≈32 A/phase, MCB 32 A','I≈20 A/phase, MCB 20 A','I≈25 A/phase, MCB 25 A'], answer:0, hint:'สามเฟสใช้ I=P/(√3·V·pf)', explain:'I = 11000/(√3×400×1) ≈ 15.9 A ⇒ เลือกอุปกรณ์พิกัด 16 A', ref:'สูตรสามเฟส + pf รวมในสูตร'},
+      {id:'H5', level:'Hard', stem:'จาก H4 เลือกสาย IEC 01 (THW) ร้อยท่อเกาะผนัง เหมาะสมที่สุดคือ?', choices:['2.5 ตร.มม. (21A) ผ่าน ×1.25','4 ตร.มม. (28A) ผ่าน ×1.25','1.5 ตร.มม. (15A) พอ','6 ตร.มม. (36A) จำเป็น'], answer:1, hint:'คิด Iจริง×1.25 ก่อน', explain:'Iจริง≈16 A ⇒ ต้อง ≥1.25×16=20 A. 2.5 ตร.มม. 21A พอเผื่อ แต่เพื่อ margin/สภาพจริง นิยม 4 ตร.มม. 28A จึงเหมาะสมกว่า', ref:'ตาราง IEC 01 (THW) กลุ่มที่2 (ร้อยท่อเกาะผนัง)'},
+
+      // Extra pool for Mixed (10) — practical & compare standards
+      {id:'X1', level:'Mixed', stem:'การติดตั้งภายนอก ควรมีระบบป้องกัน surge เพิ่มหรือไม่?', choices:['ควรแนะนำให้มี','ไม่จำเป็น','ขึ้นกับสีกล่อง','ห้ามติดตั้ง'], answer:0, hint:'สภาพฟ้าผ่า/เหนี่ยวนำ', explain:'แนะนำให้ติดตั้งอุปกรณ์ป้องกันแรงดันเกินชั่วขณะ (Surge protection) สำหรับภายนอก', ref:'MPESTD‑001:2563 ข้อ 6.6'},
+      {id:'X2', level:'Mixed', stem:'หัวจ่ายมากกว่า 1 หัวในเครื่องเดียว ต้องมีการป้องกันอย่างไร?', choices:['ใช้เมนเดียวพอ','ต้องมี OCP & RCD แยกต่อหัวจ่ายแบบ built‑in','ใช้ฟิวส์รวม','ไม่ระบุ'], answer:1, hint:'คิดถึง selectivity', explain:'ต้องมีอุปกรณ์ป้องกันกระแสเกินและ RCD แยกตามจำนวนหัวจ่าย ภายในตัวเครื่อง และยังต้องมีป้องกันที่วงจรย่อยด้วย', ref:'MPESTD‑001:2563 ข้อ 6.2'},
+      {id:'X3', level:'Mixed', stem:'โหมด 2 ใช้เต้ารับแบบพกพาได้หรือไม่?', choices:['ได้','ไม่ได้','ได้ถ้า ≤10A','แล้วแต่ช่าง'], answer:1, hint:'portable socket‑outlet?', explain:'ห้ามใช้เต้ารับชนิดหยิบยกได้ (Portable socket‑outlet) จ่าย EVSE', ref:'MPESTD‑001:2563 ข้อ 5.4'},
+      {id:'X4', level:'Mixed', stem:'ป้ายเตือน “EV connecting point …A, …kW (MAX.)” ใช้กับบริบทใด?', choices:['โหมด 2 ที่เต้ารับ','โหมด 4 DC','หม้อแปลง','โหลดแสงสว่าง'], answer:0, hint:'ดูตารางข้อความบนป้าย', explain:'เต้ารับโหมด 2 ต้องติดป้ายเตือนตามรูปที่ 10/ตารางที่ 4', ref:'MPESTD‑001:2563 ข้อ 5.5‑5.6'},
+      {id:'X5', level:'Mixed', stem:'ตัวคูณปรับค่ากระแสเมื่อเดินสายเกาะผนังหลายวงจร (derating) ถูกต้องข้อใด?', choices:['2 วงจร ใช้ 0.85','3 วงจร ใช้ 0.95','4 วงจร ใช้ 0.90','9‑20 วงจร ใช้ 0.90'], answer:0, hint:'จำตาราง 1', explain:'ตารางที่ 1: 2 วงจร 0.85; 3 วงจร 0.79; 4 วงจร 0.75; 9‑20 วงจร 0.70', ref:'MPESTD‑001:2563 ข้อ 3.9.2 ตารางที่ 1'},
+      {id:'X6', level:'Mixed', stem:'ในกรณี TN‑C‑S แล้วทำ TT เฉพาะ EVSE ต้องรักษาระยะโครงโลหะที่ต่อดินต่างระบบห่างกันอย่างน้อย?', choices:['1.0 ม.','2.5 ม.','5.0 ม.','ไม่กำหนด'], answer:1, hint:'touch potential', explain:'ต้องห่างระหว่างโครงโลหะที่ต่อดินต่างระบบ ≥2.5 ม. และหลักดินห่าง ≥2.0 ม.', ref:'MPESTD‑001:2563 ข้อ 4.2.1 (1) และรูปที่ 9'},
+      {id:'X7', level:'Mixed', stem:'โหลด EVSE ในการคำนวณสายเมนของอาคาร ให้ใช้ Demand factor?', choices:['0.5','0.75','1.0','ขึ้นกับดีไซน์เนอร์'], answer:2, hint:'เหมือนข้อวงจรย่อย', explain:'กำหนด Demand factor = 1 สำหรับขนาดสายป้อน/สายเมน', ref:'MPESTD‑001:2563 ข้อ 3.5'},
+      {id:'X8', level:'Mixed', stem:'IC‑CPD ในโหมด 2 มีหน้าที่?', choices:['แค่ปลั๊กธรรมดา','ควบคุมและป้องกันในสาย','วัดพลังงานเท่านั้น','ทำหน้าที่แทนหม้อแปลง'], answer:1, hint:'ชื่อเต็ม In‑cable control and protection device', explain:'IC‑CPD คือชุดสาย/กล่องควบคุมในสาย ที่มีฟังก์ชันควบคุมและความปลอดภัย', ref:'MPESTD‑001:2563 ข้อ 2.3, 2.7‑2.8'},
+      {id:'X9', level:'Mixed', stem:'EVSE ภายนอกอาคาร ควรพิจารณาป้องกันน้ำท่วมอย่างไร?', choices:['ไม่จำเป็น','ควรติดตั้งในจุดที่ระดับน้ำท่วมไม่ถึงและมีมาตรการป้องกันน้ำท่วม','ใช้ซิลิโคนพอ','ยกเลิกการติดตั้ง'], answer:1, hint:'มาตรฐานมีข้อกำหนดเฉพาะ', explain:'ต้องติดตั้งในจุดที่ระดับน้ำท่วมไม่ถึง และจัดให้มีมาตรการป้องกันน้ำท่วม', ref:'MEA 5.16 ; MPESTD‑001 ข้อ 3.10'},
+      {id:'X10', level:'Mixed', stem:'เลือกเบรกเกอร์ให้ “ตรงกับสายและค่ากระแส” หลักไหนสำคัญที่สุด?', choices:['ดูยี่ห้อก่อน','กำลังไฟฟ้าป้ายโฆษณา','ค่ากระแส I และพิกัดสายตามตาราง + เผื่อ ×1.25','สีของคันโยก'], answer:2, hint:'สัมพันธ์กับสายและโหลดจริง', explain:'ต้องจับคู่พิกัดกระแสของอุปกรณ์ป้องกันกับกระแสใช้งาน และขนาดสายที่เลือก (ซึ่งคำนวณจาก Iจริง×1.25 และตาราง IEC 01)', ref:'แนวปฏิบัติออกแบบวงจรย่อย EVSE ตาม MPESTD & ตาราง IEC 01'}
+    ];
+
+    // ====== Utility ======
+    function pickByLevel(level){
+      if(level==='Mixed'){
+        // pick 10 random from entire pool
+        const pool=[...QUESTIONS];
+        return shuffle(pool).slice(0,10);
+      }
+      return QUESTIONS.filter(q=>q.level===level).slice(0, level==='Easy'||level==='Medium'||level==='Hard'?5:10);
+    }
+    function shuffle(arr){
+      for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]];} return arr;
+    }
+
+    // ====== Game State ======
+    let mode='—', paper=[], idx=0, timer=null, tLeft=45, score=0, streak=0, answered=false;
+
+    const qIndexEl=document.getElementById('qIndex');
+    const qTotalEl=document.getElementById('qTotal');
+    const modeLabel=document.getElementById('modeLabel');
+    const timerBar=document.getElementById('timerBar');
+    const secLeft=document.getElementById('secLeft');
+    const stemEl=document.getElementById('stem');
+    const choicesEl=document.getElementById('choices');
+    const actions=document.getElementById('actions');
+    const hintBtn=document.getElementById('hintBtn');
+    const whyBtn=document.getElementById('whyBtn');
+    const feedback=document.getElementById('feedback');
+    const resultText=document.getElementById('resultText');
+    const explain=document.getElementById('explain');
+    const refEl=document.getElementById('ref');
+    const nextBtn=document.getElementById('nextBtn');
+    const scoreEl=document.getElementById('score');
+    const streakEl=document.getElementById('streak');
+
+    document.querySelectorAll('.mode').forEach(b=>b.addEventListener('click',()=>start(b.dataset.mode)));
+
+    function start(m){
+      mode=m; modeLabel.textContent=mode;
+      paper=pickByLevel(m); idx=0; score=0; streak=0;
+      scoreEl.textContent=score; streakEl.textContent=streak+'🔥';
+      qTotalEl.textContent=paper.length; qIndexEl.textContent=0;
+      next(); audio.beep('ok'); document.getElementById('card').classList.add('flash');
+      setTimeout(()=>document.getElementById('card').classList.remove('flash'),500);
+    }
+
+    function next(){
+      clearInterval(timer); feedback.classList.add('hidden'); actions.classList.remove('hidden');
+      if(idx>=paper.length){ endGame(); return; }
+      const q=paper[idx]; answered=false; tLeft=45; updateTimer();
+      stemEl.textContent = q.stem + ' ⏱️';
+      qIndexEl.textContent = (idx+1);
+      renderChoices(q);
+      timer = setInterval(()=>{ tLeft--; updateTimer(); if(tLeft<=0){ clearInterval(timer); lockChoices(); reveal(false, null, q); } },1000);
+    }
+
+    function renderChoices(q){
+      choicesEl.innerHTML='';
+      q.choices.forEach((c,i)=>{
+        const btn=document.createElement('button');
+        btn.className='btn choice text-left'; btn.innerHTML = `<span class="font-bold mr-2">${String.fromCharCode(65+i)}.</span> ${c}`;
+        btn.addEventListener('click',()=> choose(i,q,btn));
+        choicesEl.appendChild(btn);
+      });
+      hintBtn.onclick=()=> showHint(q);
+      whyBtn.onclick=()=> askWhy();
+    }
+
+    function updateTimer(){
+      secLeft.textContent=tLeft; const pct=Math.max(0,(tLeft/45)*100); timerBar.style.width=pct+'%';
+      timerBar.style.background = `linear-gradient(90deg, var(--sec), ${pct>66?'#34d399':pct>33?'#f59e0b':'#ef4444'})`;
+    }
+
+    function choose(i,q,btn){ if(answered) return; answered=true; clearInterval(timer); const correct = (i===q.answer); lockChoices();
+      if(correct){ btn.classList.add('correct'); const pts=Math.max(0, Math.round(1000*(tLeft/45))); score+=pts; streak++; audio.beep('ok'); resultText.innerHTML=`✅ ถูกต้อง! +${pts} คะแนน`; }
+      else{ btn.classList.add('wrong'); streak=0; audio.boom(); resultText.innerHTML='❌ ยังไม่ถูก ลองอ่านเหตุผลด้านล่าง'; }
+      scoreEl.textContent=score; streakEl.textContent=streak+'🔥';
+      reveal(true, i, q);
+    }
+
+    function lockChoices(){
+      [...choicesEl.children].forEach((b,ix)=>{ b.disabled=true; const q=paper[idx]; if(ix===q.answer) b.classList.add('correct'); });
+    }
+
+    function showHint(q){ alert('คำใบ้:\n'+q.hint); }
+    function askWhy(){ const ans = prompt('โหมดโสกราติส 🤔\nทำไมถึงเลือกข้อนี้? อธิบายสั้น ๆ ด้วยหลักฐาน/สูตร'); if(ans!==null){ alert('เยี่ยม! เก็บคำตอบไว้พัฒนาวิธีคิดต่อไป ✨'); } }
+
+    function reveal(nextable, chosenIndex, q){
+      explain.innerHTML = q.explain;
+      refEl.textContent = 'อ้างอิง: '+ q.ref;
+      feedback.classList.remove('hidden');
+      nextBtn.onclick=()=>{ idx++; next(); };
+    }
+
+    function endGame(){
+      stemEl.innerHTML = `จบเกมแล้ว! 🎉 คุณได้ <b>${score}</b> คะแนน`;
+      choicesEl.innerHTML=''; actions.classList.add('hidden'); feedback.classList.add('hidden');
+      const praise = score>8000? 'เทพวงจร! 🔥': score>5000? 'แน่นมาก 💪': score>2500? 'ไปได้สวย ✨': 'เริ่มต้นดี ลุยต่อ! 🚀';
+      const share = document.createElement('div'); share.className='mt-4 text-center';
+      share.innerHTML = `<div class="text-xl font-bold mb-2">${praise}</div>
+        <button class="btn" onclick="navigator.clipboard.writeText('ฉันได้ '+${score}+ ' คะแนน ในเกม EVSE Quiz!')">คัดลอกคะแนนไปอวดเพื่อน 😎</button>`;
+      choicesEl.appendChild(share);
+    }
+
+    document.getElementById('resetBtn').addEventListener('click',()=>{ start(mode==='—'?'Easy':mode); });
+  </script>
+</body>
+</html>
